@@ -9,6 +9,23 @@
 <p>
     <a asp-action="Create">Criar Novo Equipamento</a>
 </p>
+
+<table>
+    <thead>
+    <tr>
+        @using (Html.BeginForm())
+        {
+            <td>
+                @Html.DropDownList("TipoEquipamento", (IEnumerable<SelectListItem>)ViewBag.TipoEquipamento, "-- Selecione um tipo de equipamento--", new { @class = "form-control" })
+            </td>
+            <td>
+                <input type="submit" value="Filtrar" class="btn btn-primary" />
+            </td>
+        }
+    </tr>
+    </thead>
+</table>
+
 <table class="table">
     <thead>
         <tr>

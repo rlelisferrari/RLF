@@ -31,6 +31,6 @@ namespace DATA.Contexts
         public DbSet<Equipamento> Equipamentos { get; set; }
         public DbSet<TipoOrdem> TipoOrdens { get; set; }
         public DbSet<TipoEquipamento> TipoEquipamento { get; set; }
-        public DbSet<EquipamentoTipoEquipamento> EquipamentoTipoEquipamentos { get; set; }
+        public DbSet<EquipamentoTipoEquipamento> EquipamentoTipoEquipamento { get; set; }
     }
 }

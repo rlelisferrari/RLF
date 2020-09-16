@@ -1,26 +1,55 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using DATA.Contexts;
 using DOMAIN.Interfaces.Repositories;
 using DOMAIN.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 
 namespace WebAppMVC.Controllers
 {
     public class EquipamentosController : Controller
     {
+        private readonly AppDbContext _context;
         private readonly IEquipamentoRepository equipamentoRepository;
 
         public EquipamentosController(AppDbContext context, IEquipamentoRepository equipamentoRepository)
         {
+            this._context = context;
             this.equipamentoRepository = equipamentoRepository;
         }
 
         // GET: Equipamentoes
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string tipoEquipamento)
         {
-            return View(await this.equipamentoRepository.GetAllAsyn());
+            ViewBag.TipoEquipamento = new SelectList(this._context.TipoEquipamento, "Id", "Nome");
+
+            var id = Convert.ToInt32(tipoEquipamento);
+            
+            if (id > 0)
+            {
+                var equipamentosFiltrados = this._context.Equipamentos
+                    .Join(
+                        this._context.EquipamentoTipoEquipamento,
+                        eq => eq.Id,
+                        ete => ete.EquipamentoId,
+                        (eq, ete) => new {eq, ete})
+                    .Join(
+                        this._context.TipoEquipamento,
+                        t => t.ete.TipoEquipamentoId,
+                        te => te.Id,
+                        (t, te) => new {t, te})
+                    .Where(t => t.te.Id == id)
+                    .Select(eq => eq.t)
+                    .Select(eq => eq.eq);
+
+                return View(equipamentosFiltrados);
+            }
+            else
+                return View(await this.equipamentoRepository.GetAllAsyn());
         }
 
         // GET: Equipamentoes/Details/5
