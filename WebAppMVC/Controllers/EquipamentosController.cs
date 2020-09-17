@@ -8,6 +8,7 @@ using DOMAIN.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using WebAppMVC.ViewModels;
 
 namespace WebAppMVC.Controllers
 {
@@ -15,11 +16,13 @@ namespace WebAppMVC.Controllers
     {
         private readonly AppDbContext _context;
         private readonly IEquipamentoRepository equipamentoRepository;
+        private CreateEquipamentoVM createEquipamentoVM;
 
         public EquipamentosController(AppDbContext context, IEquipamentoRepository equipamentoRepository)
         {
             this._context = context;
             this.equipamentoRepository = equipamentoRepository;
+            createEquipamentoVM = new CreateEquipamentoVM(this._context);
         }
 
         // GET: Equipamentoes
@@ -28,7 +31,7 @@ namespace WebAppMVC.Controllers
             ViewBag.TipoEquipamento = new SelectList(this._context.TipoEquipamento, "Id", "Nome");
 
             var id = Convert.ToInt32(tipoEquipamento);
-            
+
             if (id > 0)
             {
                 var equipamentosFiltrados = this._context.Equipamentos
@@ -48,8 +51,8 @@ namespace WebAppMVC.Controllers
 
                 return View(equipamentosFiltrados);
             }
-            else
-                return View(await this.equipamentoRepository.GetAllAsyn());
+
+            return View(await this.equipamentoRepository.GetAllAsyn());
         }
 
         // GET: Equipamentoes/Details/5
@@ -59,7 +62,7 @@ namespace WebAppMVC.Controllers
                 return NotFound();
 
             var equipamento = await this.equipamentoRepository.GetAsync((int) id);
-                
+
             if (equipamento == null)
                 return NotFound();
 
@@ -69,7 +72,7 @@ namespace WebAppMVC.Controllers
         // GET: Equipamentoes/Create
         public IActionResult Create()
         {
-            return View();
+            return View(this.createEquipamentoVM);
         }
 
         // POST: Equipamentoes/Create
@@ -77,15 +80,29 @@ namespace WebAppMVC.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Nome,Id")] Equipamento equipamento)
+        public async Task<IActionResult> Create([Bind("Nome,Id")] Equipamento equipamento, List<int> tipoEquipamento)
         {
+            this.createEquipamentoVM.Equipamento = equipamento;
+            
             if (ModelState.IsValid)
             {
-                this.equipamentoRepository.Add(equipamento);
+                var newEq = this.equipamentoRepository.Add(equipamento);
+
+                foreach (var tipoEq in tipoEquipamento)
+                {
+                    var ete = new EquipamentoTipoEquipamento();
+                    ete.EquipamentoId = newEq.Id;
+                    ete.TipoEquipamentoId = tipoEq;
+                    this._context.EquipamentoTipoEquipamento.Add(ete);
+                    this._context.SaveChanges();
+                }
+
                 return RedirectToAction(nameof(Index));
             }
 
-            return View(equipamento);
+            
+
+            return View(this.createEquipamentoVM);
         }
 
         // GET: Equipamentoes/Edit/5
@@ -94,7 +111,7 @@ namespace WebAppMVC.Controllers
             if (id == null)
                 return NotFound();
 
-            var equipamento = await this.equipamentoRepository.GetAsync((int)id);
+            var equipamento = await this.equipamentoRepository.GetAsync((int) id);
 
             if (equipamento == null)
                 return NotFound();
@@ -136,7 +153,7 @@ namespace WebAppMVC.Controllers
             if (id == null)
                 return NotFound();
 
-            var equipamento = await this.equipamentoRepository.GetAsync((int)id);
+            var equipamento = await this.equipamentoRepository.GetAsync((int) id);
             if (equipamento == null)
                 return NotFound();
 
