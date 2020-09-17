@@ -8,6 +8,7 @@ namespace WebAppMVC.ViewModels
     {
         public Equipamento Equipamento { get; set; }
         public IEnumerable<Equipamento> Equipamentos { get; set; }
+        public IEnumerable<TipoEquipamento> TodosTiposEquipamento { get; set; }
         public IEnumerable<TipoEquipamento> TiposEquipamento { get; set; }
 
         private readonly AppDbContext context;
@@ -16,7 +17,7 @@ namespace WebAppMVC.ViewModels
         {
             this.context = context;
             Equipamentos = this.context.Equipamentos;
-            TiposEquipamento = this.context.TipoEquipamento;
+            TodosTiposEquipamento = this.context.TipoEquipamento;
         }
     }
 }

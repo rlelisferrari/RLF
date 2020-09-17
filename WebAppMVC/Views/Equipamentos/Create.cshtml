@@ -18,9 +18,9 @@
             </div>
             <div>
                 <table>
-                    @foreach (var item in Model.TiposEquipamento)
+                    @foreach (var item in Model.TodosTiposEquipamento)
                     {
-                        <input name="tipoEquipamento" type="checkbox" value="@item.Id" />
+                        <input name="tipoEquipamento" type="checkbox" value="@item.Id" checked="@item.Id"/>
                         <label>@item.Nome</label>
                     }
                 </table>

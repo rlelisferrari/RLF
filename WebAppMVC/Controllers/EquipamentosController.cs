@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using DATA.Contexts;
 using DOMAIN.Interfaces.Repositories;
@@ -61,12 +62,24 @@ namespace WebAppMVC.Controllers
             if (id == null)
                 return NotFound();
 
-            var equipamento = await this.equipamentoRepository.GetAsync((int) id);
+            var equipamento = this.equipamentoRepository.GetAllIncluding(eq => eq.EquipamentoTipoEquipamento)
+                .FirstOrDefault(eqp => eqp.Id.Equals((int)id));
+            
+            createEquipamentoVM.Equipamento = equipamento;
+
+            //Alterar para código LINQ
+            var tipos = new List<TipoEquipamento>();
+            foreach (var equipamentoTipoEquipamento in equipamento.EquipamentoTipoEquipamento)
+            {
+                tipos.Add(this._context.TipoEquipamento.FirstOrDefault(te => te.Id.Equals(equipamentoTipoEquipamento.TipoEquipamentoId)));
+            }
+
+            this.createEquipamentoVM.TiposEquipamento = tipos;
 
             if (equipamento == null)
                 return NotFound();
 
-            return View(equipamento);
+            return View(createEquipamentoVM);
         }
 
         // GET: Equipamentoes/Create
@@ -111,11 +124,14 @@ namespace WebAppMVC.Controllers
             if (id == null)
                 return NotFound();
 
-            var equipamento = await this.equipamentoRepository.GetAsync((int) id);
+            var equipamento = this.equipamentoRepository.GetAllIncluding(eq => eq.EquipamentoTipoEquipamento)
+                .FirstOrDefault(equip => equip.Id.Equals((int) id));
+
+            this.createEquipamentoVM.Equipamento = equipamento;
 
             if (equipamento == null)
                 return NotFound();
-            return View(equipamento);
+            return View(this.createEquipamentoVM);
         }
 
         // POST: Equipamentoes/Edit/5
@@ -123,16 +139,25 @@ namespace WebAppMVC.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Nome,Id")] Equipamento equipamento)
+        public async Task<IActionResult> Edit(int id, [Bind("Nome,Id")] Equipamento equipamento, List<int> tipoEquipamento)
         {
             if (id != equipamento.Id)
                 return NotFound();
+
+            equipamento.EquipamentoTipoEquipamento = new List<EquipamentoTipoEquipamento>();
+            foreach (var tipoEq in tipoEquipamento)
+            {
+                var ete = new EquipamentoTipoEquipamento();
+                ete.EquipamentoId = equipamento.Id;
+                ete.TipoEquipamentoId = tipoEq;
+                equipamento.EquipamentoTipoEquipamento.Add(ete);
+            }
 
             if (ModelState.IsValid)
             {
                 try
                 {
-                    this.equipamentoRepository.Update(equipamento, equipamento.Id);
+                    await this.equipamentoRepository.UpdateAsyn(equipamento, equipamento.Id);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -144,7 +169,7 @@ namespace WebAppMVC.Controllers
                 return RedirectToAction(nameof(Index));
             }
 
-            return View(equipamento);
+            return View(this.createEquipamentoVM);
         }
 
         // GET: Equipamentoes/Delete/5

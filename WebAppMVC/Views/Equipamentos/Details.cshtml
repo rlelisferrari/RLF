@@ -1,4 +1,4 @@
-﻿@model DOMAIN.Models.Equipamento
+﻿@model WebAppMVC.ViewModels.CreateEquipamentoVM
 
 @{
     ViewData["Title"] = "Details";
@@ -10,15 +10,28 @@
     <h4>Equipamento</h4>
     <hr />
     <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Nome)
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Equipamento.Nome)
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Nome)
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Equipamento.Nome)
         </dd>
     </dl>
+    @foreach (var item in Model.TiposEquipamento)
+    {
+        <dl class="row">
+            <dt class="col-sm-2">
+                Tipo
+            </dt>
+            <dd class="col-sm-10">
+                <td><label>@item.Nome</label></td>
+            </dd>
+        </dl>
+    }
+
+    
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+    <a asp-action="Edit" asp-route-id="@Model.Equipamento.Id">Edit</a> |
     <a asp-action="Index">Back to List</a>
 </div>
