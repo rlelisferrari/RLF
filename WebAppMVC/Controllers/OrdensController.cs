@@ -8,6 +8,7 @@ using DOMAIN.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using WebAppMVC.ViewModels;
 
 namespace WebAppMVC.Controllers
 {
@@ -16,11 +17,14 @@ namespace WebAppMVC.Controllers
         private readonly AppDbContext _context;
         private readonly IOrdemRepository ordemRepository;
         private readonly ITipoOrdemRepository tipoOrdemRepository;
+        private readonly OrdemVM ordemVM;
+
 
         public OrdensController(AppDbContext context, IOrdemRepository ordemRepository)
         {
             this._context = context;
             this.ordemRepository = ordemRepository;
+            this.ordemVM = new OrdemVM(context);
         }
 
         // GET: Ordens
@@ -56,8 +60,13 @@ namespace WebAppMVC.Controllers
         // GET: Ordens/Create
         public IActionResult Create()
         {
-            ViewBag.TipoOrdem = new SelectList(this._context.TipoOrdens, "Id", "Nome", 0);
+            ViewBag.TipoOrdem = new SelectList(this._context.TipoOrdens, "Id", "Nome");
             return View();
+        }
+
+        public IActionResult CreateByVM()
+        {
+            return View(this.ordemVM);
         }
 
         // POST: Ordens/Create
@@ -65,9 +74,15 @@ namespace WebAppMVC.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Nome,Id")] Ordem ordem)
+        public async Task<IActionResult> Create([Bind("Nome,Id")] Ordem ordem, string tipoOrdem)
         {
-            var tipoOrdemId = Convert.ToInt32(Request.Form["TipoOrdem"]);
+            var tipoOrdemId = Convert.ToInt32(tipoOrdem);
+            if (tipoOrdemId <= 0)
+            {
+                ViewBag.TipoOrdem = new SelectList(this._context.TipoOrdens, "Id", "Nome");
+                return View();
+            }
+
             ordem.TipoOrdem = this._context.TipoOrdens.FirstOrDefault(to => to.Id.Equals(tipoOrdemId));
             if (ModelState.IsValid)
             {
@@ -76,6 +91,24 @@ namespace WebAppMVC.Controllers
             }
 
             return View(ordem);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CreateByVM(Ordem ordem, string tipoOrdem)
+        {
+            var tipoOrdemId = Convert.ToInt32(tipoOrdem);
+            if (tipoOrdemId <= 0)
+                return View(this.ordemVM);
+
+            ordem.TipoOrdem = this._context.TipoOrdens.FirstOrDefault(to => to.Id.Equals(tipoOrdemId));
+            if (ModelState.IsValid)
+            {
+                this.ordemRepository.Add(ordem);
+                return RedirectToAction(nameof(Index));
+            }
+
+            return View(this.ordemVM);
         }
 
         // GET: Ordens/Edit/5

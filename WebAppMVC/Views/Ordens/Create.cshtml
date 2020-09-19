@@ -17,8 +17,8 @@
                 <span asp-validation-for="Nome" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="TipoOrdem" class="control-label"></label>
-                @Html.DropDownList("TipoOrdem", (IEnumerable<SelectListItem>) ViewBag.TipoOrdem, new {@class = "form-control"})
+                <label class="control-label">Tipo de Ordem</label>
+                @Html.DropDownList("TipoOrdem", (IEnumerable<SelectListItem>) ViewBag.TipoOrdem, "--- Selecione um tipo de ordem ---", new {@class = "form-control"})
             </div>
             <div class="form-group">
                 <input type="submit" value="Salvar" class="btn btn-primary"/>

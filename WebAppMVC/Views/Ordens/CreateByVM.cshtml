@@ -1,0 +1,48 @@
+﻿@model WebAppMVC.ViewModels.OrdemVM
+
+@{
+    ViewData["Title"] = "Nova Ordem";
+}
+
+<h1>Nova Ordem</h1>
+
+<hr/>
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="CreateByVM">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Ordem.Nome" ></label>
+                <input asp-for="Ordem.Nome" class="form-control"/>
+                <span asp-validation-for="Ordem.Nome" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label>Tipo de Ordem</label>
+                @*@Html.DropDownList("TipoOrdem", new SelectList(Model.TodosTiposOrdem, "Id", "Nome"), new { @class = "form-control" })*@
+                <select name="tipoOrdem" class="form-control">
+                    <option value="0" selected>--- Selecione um tipo de ordem ---</option>
+                    @{
+                        if (Model.TodosTiposOrdem != null)
+                        {
+                            foreach (var tipoOrdem in Model.TodosTiposOrdem)
+                            {
+                                <option value="@tipoOrdem.Id">@tipoOrdem.Nome</option>
+                            }
+                        }
+                    }
+                </select>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Salvar" class="btn btn-primary"/>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Voltar a lista</a>
+</div>
+
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+}
