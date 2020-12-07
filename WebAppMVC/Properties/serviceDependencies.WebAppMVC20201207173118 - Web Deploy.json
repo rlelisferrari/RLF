@@ -1,0 +1,10 @@
+{
+  "dependencies": {
+    "mssql1": {
+      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroup')]/providers/Microsoft.Sql/servers/rlfserver/databases/RLF_BD",
+      "type": "mssql.azure",
+      "connectionId": "SGOOConnection",
+      "secretStore": "AzureAppSettings"
+    }
+  }
+}
