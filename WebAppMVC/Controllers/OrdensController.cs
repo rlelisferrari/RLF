@@ -8,6 +8,7 @@ using DOMAIN.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using WebAppMVC.ViewModels;
 
 namespace WebAppMVC.Controllers
@@ -18,12 +19,14 @@ namespace WebAppMVC.Controllers
         private readonly IOrdemRepository ordemRepository;
         private readonly ITipoOrdemRepository tipoOrdemRepository;
         private readonly OrdemVM ordemVM;
+        private readonly ILogger<HomeController> _logger;
 
 
-        public OrdensController(AppDbContext context, IOrdemRepository ordemRepository)
+        public OrdensController(AppDbContext context, IOrdemRepository ordemRepository, ILogger<HomeController> logger)
         {
             this._context = context;
             this.ordemRepository = ordemRepository;
+            this._logger = logger;
             this.ordemVM = new OrdemVM(context);
         }
 
@@ -35,9 +38,18 @@ namespace WebAppMVC.Controllers
 
             var id = Convert.ToInt32(tipoOrdem);
             if (id > 0)
-                return View(ordens.Where(ord => ord.TipoOrdem.Id.Equals(id)));
+            {
+                var ordensFiltered = ordens.Where(ord => ord.TipoOrdem.Id.Equals(id));
+                this._logger.LogInformation($"Usuário acessou a página de Ordens. Filtrou pelo tipo {ordensFiltered.FirstOrDefault()?.TipoOrdem.Nome}");
+                this._logger.LogInformation($"Foram encontrados {ordensFiltered.Count()} ordens");
+                return View(ordensFiltered);
+            }
             else
+            {
+                this._logger.LogInformation($"Usuário acessou a página de Ordens. Não filtrou por nenhum tipo");
+                this._logger.LogInformation($"Foram encontrados {ordens.Count()} ordens");
                 return View(ordens);
+            }
         }
 
         // GET: Ordens/Details/5
