@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using ApiCatalogo.Repository;
 using DOMAIN.Interfaces.Repositories;
 using DOMAIN.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -8,17 +9,17 @@ namespace WebAppMVC.Controllers
 {
     public class TipoOrdemController : Controller
     {
-        private readonly ITipoOrdemRepository tipoOrdemRepository;
+        private readonly IUnitOfWork uof;
 
-        public TipoOrdemController(ITipoOrdemRepository tipoOrdemRepository)
+        public TipoOrdemController(IUnitOfWork uof)
         {
-            this.tipoOrdemRepository = tipoOrdemRepository;
+            this.uof = uof;
         }
 
         // GET: TipoOrdem
         public async Task<IActionResult> Index()
         {
-            return View(await this.tipoOrdemRepository.GetAllAsyn());
+            return View(await this.uof.TipoOrdemRepository.GetAllAsyn());
         }
 
         // GET: TipoOrdem/Details/5
@@ -27,7 +28,7 @@ namespace WebAppMVC.Controllers
             if (id == null)
                 return NotFound();
 
-            var tipoOrdem = await this.tipoOrdemRepository.GetAsync((int) id);
+            var tipoOrdem = await this.uof.TipoOrdemRepository.GetAsync((int) id);
             if (tipoOrdem == null)
                 return NotFound();
 
@@ -49,7 +50,7 @@ namespace WebAppMVC.Controllers
         {
             if (ModelState.IsValid)
             {
-                this.tipoOrdemRepository.Add(tipoOrdem);
+                this.uof.TipoOrdemRepository.Add(tipoOrdem);
                 return RedirectToAction(nameof(Index));
             }
 
@@ -62,7 +63,7 @@ namespace WebAppMVC.Controllers
             if (id == null)
                 return NotFound();
 
-            var tipoOrdem = await this.tipoOrdemRepository.GetAsync((int) id);
+            var tipoOrdem = await this.uof.TipoOrdemRepository.GetAsync((int) id);
             if (tipoOrdem == null)
                 return NotFound();
             return View(tipoOrdem);
@@ -82,7 +83,7 @@ namespace WebAppMVC.Controllers
             {
                 try
                 {
-                    this.tipoOrdemRepository.Update(tipoOrdem, tipoOrdem.Id);
+                    this.uof.TipoOrdemRepository.Update(tipoOrdem, tipoOrdem.Id);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -103,7 +104,7 @@ namespace WebAppMVC.Controllers
             if (id == null)
                 return NotFound();
 
-            var tipoOrdem = await this.tipoOrdemRepository.GetAsync((int) id);
+            var tipoOrdem = await this.uof.TipoOrdemRepository.GetAsync((int) id);
             if (tipoOrdem == null)
                 return NotFound();
 
@@ -116,14 +117,14 @@ namespace WebAppMVC.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var tipoOrdem = await this.tipoOrdemRepository.GetAsync(id);
-            await this.tipoOrdemRepository.DeleteAsyn(tipoOrdem);
+            var tipoOrdem = await this.uof.TipoOrdemRepository.GetAsync(id);
+            await this.uof.TipoOrdemRepository.DeleteAsyn(tipoOrdem);
             return RedirectToAction(nameof(Index));
         }
 
         private bool TipoOrdemExists(int id)
         {
-            return this.tipoOrdemRepository.Get(id) != null;
+            return this.uof.TipoOrdemRepository.Get(id) != null;
         }
     }
 }

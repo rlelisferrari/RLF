@@ -1,4 +1,5 @@
 using ApiCatalogo.Logging;
+using ApiCatalogo.Repository;
 using DATA.Contexts;
 using DATA.Repositories;
 using DOMAIN.Interfaces.Repositories;
@@ -33,13 +34,14 @@ namespace WebAppMVC
 
             services.AddControllers();
 
-            services.AddScoped(typeof(IEquipamentoRepository), typeof(EquipamentoRepository));
-            services.AddScoped(typeof(IOrdemRepository), typeof(OrdemRepository));
-            services.AddScoped(typeof(ITipoOrdemRepository), typeof(TipoOrdemRepository));
+            //services.AddScoped(typeof(IEquipamentoRepository), typeof(EquipamentoRepository));
+            //services.AddScoped(typeof(IOrdemRepository), typeof(OrdemRepository));
+            //services.AddScoped(typeof(ITipoOrdemRepository), typeof(TipoOrdemRepository));
+            services.AddScoped(typeof(IUnitOfWork), typeof(UnitOfWork));
 
-            services.AddScoped<EquipamentoService>();
-            services.AddScoped<OrdemService>();
-            services.AddScoped<TipoOrdemService>();
+            //services.AddScoped<EquipamentoService>();
+            //services.AddScoped<OrdemService>();
+            //services.AddScoped<TipoOrdemService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

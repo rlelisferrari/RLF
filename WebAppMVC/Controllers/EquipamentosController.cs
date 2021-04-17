@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
+using ApiCatalogo.Repository;
 using DATA.Contexts;
 using DOMAIN.Interfaces.Repositories;
 using DOMAIN.Models;
@@ -16,13 +17,13 @@ namespace WebAppMVC.Controllers
     public class EquipamentosController : Controller
     {
         private readonly AppDbContext _context;
-        private readonly IEquipamentoRepository equipamentoRepository;
+        private readonly IUnitOfWork uof;
         private CreateEquipamentoVM createEquipamentoVM;
 
-        public EquipamentosController(AppDbContext context, IEquipamentoRepository equipamentoRepository)
+        public EquipamentosController(AppDbContext context, IUnitOfWork uof)
         {
             this._context = context;
-            this.equipamentoRepository = equipamentoRepository;
+            this.uof = uof;
             createEquipamentoVM = new CreateEquipamentoVM(this._context);
         }
 
@@ -53,7 +54,7 @@ namespace WebAppMVC.Controllers
                 return View(equipamentosFiltrados);
             }
 
-            return View(await this.equipamentoRepository.GetAllAsyn());
+            return View(await this.uof.EquipamentoRepository.GetAllAsyn());
         }
 
         // GET: Equipamentoes/Details/5
@@ -62,7 +63,7 @@ namespace WebAppMVC.Controllers
             if (id == null)
                 return NotFound();
 
-            var equipamento = this.equipamentoRepository.GetAllIncluding(eq => eq.EquipamentoTipoEquipamento)
+            var equipamento = this.uof.EquipamentoRepository.GetAllIncluding(eq => eq.EquipamentoTipoEquipamento)
                 .FirstOrDefault(eqp => eqp.Id.Equals((int)id));
             
             createEquipamentoVM.Equipamento = equipamento;
@@ -99,7 +100,7 @@ namespace WebAppMVC.Controllers
             
             if (ModelState.IsValid)
             {
-                var newEq = this.equipamentoRepository.Add(equipamento);
+                var newEq = this.uof.EquipamentoRepository.Add(equipamento);
 
                 foreach (var tipoEq in tipoEquipamento)
                 {
@@ -124,7 +125,7 @@ namespace WebAppMVC.Controllers
             if (id == null)
                 return NotFound();
 
-            var equipamento = this.equipamentoRepository.GetAllIncluding(eq => eq.EquipamentoTipoEquipamento)
+            var equipamento = this.uof.EquipamentoRepository.GetAllIncluding(eq => eq.EquipamentoTipoEquipamento)
                 .FirstOrDefault(equip => equip.Id.Equals((int) id));
 
             this.createEquipamentoVM.Equipamento = equipamento;
@@ -157,7 +158,7 @@ namespace WebAppMVC.Controllers
             {
                 try
                 {
-                    await this.equipamentoRepository.UpdateAsyn(equipamento, equipamento.Id);
+                    await this.uof.EquipamentoRepository.UpdateAsyn(equipamento, equipamento.Id);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -178,7 +179,7 @@ namespace WebAppMVC.Controllers
             if (id == null)
                 return NotFound();
 
-            var equipamento = await this.equipamentoRepository.GetAsync((int) id);
+            var equipamento = await this.uof.EquipamentoRepository.GetAsync((int) id);
             if (equipamento == null)
                 return NotFound();
 
@@ -191,14 +192,14 @@ namespace WebAppMVC.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var equipamento = await this.equipamentoRepository.GetAsync(id);
-            this.equipamentoRepository.Delete(equipamento);
+            var equipamento = await this.uof.EquipamentoRepository.GetAsync(id);
+            this.uof.EquipamentoRepository.Delete(equipamento);
             return RedirectToAction(nameof(Index));
         }
 
         private bool EquipamentoExists(int id)
         {
-            return this.equipamentoRepository.GetAsync(id) != null;
+            return this.uof.EquipamentoRepository.GetAsync(id) != null;
         }
     }
 }
