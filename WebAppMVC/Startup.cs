@@ -34,10 +34,11 @@ namespace WebAppMVC
 
             services.AddControllers();
 
+            services.AddScoped(typeof(IUnitOfWork), typeof(UnitOfWork));
+
             //services.AddScoped(typeof(IEquipamentoRepository), typeof(EquipamentoRepository));
             //services.AddScoped(typeof(IOrdemRepository), typeof(OrdemRepository));
             //services.AddScoped(typeof(ITipoOrdemRepository), typeof(TipoOrdemRepository));
-            services.AddScoped(typeof(IUnitOfWork), typeof(UnitOfWork));
 
             //services.AddScoped<EquipamentoService>();
             //services.AddScoped<OrdemService>();
