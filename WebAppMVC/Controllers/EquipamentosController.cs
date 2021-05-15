@@ -145,8 +145,6 @@ namespace WebAppMVC.Controllers
             if (id != equipamento.Id)
                 return NotFound();
 
-            var teste = 1;
-
             equipamento.EquipamentoTipoEquipamento = new List<EquipamentoTipoEquipamento>();
             foreach (var tipoEq in tipoEquipamento)
             {
