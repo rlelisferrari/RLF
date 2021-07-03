@@ -39,8 +39,8 @@ namespace ApiCatalogo.Logging
 
         private void EscreverTextoNoArquivo(string mensagem)
         {
-            string caminhoArquivoLog = @"D:\RLF\log.txt";
-            using (StreamWriter streamWriter = new StreamWriter(caminhoArquivoLog, true))
+            string caminhoArquivoLog = @"D:\log";
+            using (StreamWriter streamWriter = new StreamWriter(caminhoArquivoLog))
             {
                 streamWriter.WriteLine(mensagem);
                 streamWriter.Close();
