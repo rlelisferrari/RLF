@@ -39,12 +39,13 @@ namespace ApiCatalogo.Logging
 
         private void EscreverTextoNoArquivo(string mensagem)
         {
-            string caminhoArquivoLog = @"D:\log";
-            using (StreamWriter streamWriter = new StreamWriter(caminhoArquivoLog))
-            {
-                streamWriter.WriteLine(mensagem);
-                streamWriter.Close();
-            }
+            string caminhoArquivoLog = @"C:\teste\log";
+            Console.WriteLine(mensagem);
+            //using (StreamWriter streamWriter = new StreamWriter(caminhoArquivoLog))
+            //{
+            //    streamWriter.WriteLine(mensagem);
+            //    streamWriter.Close();
+            //}
         }
     }
 }

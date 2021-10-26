@@ -1,0 +1,45 @@
+﻿@model IEnumerable<DOMAIN.Models.VeiculoOlx>
+
+@{
+    ViewData["Title"] = "VeiculosOlx";
+}
+
+<h1>VeiculosOlx</h1>
+
+@using (Html.BeginForm())
+{
+    <td>
+        <input type="submit" value="Filtrar" class="btn btn-primary" />
+    </td>
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Titulo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Valor)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    <a href="@Html.DisplayFor(modelItem => item.Link)">@Html.DisplayFor(modelItem => item.Titulo)</a>
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Valor)
+                </td>
+                <td>
+                    <a asp-action="MinhAction" asp-route-id="@item.Id">MinhAction</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id">Visualizar</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">Deletar</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,23 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "D:\\RLF\\DATA\\DATA.csproj": {}
+    "C:\\Users\\Elisia\\Desktop\\Teste\\RLF\\DATA\\DATA.csproj": {}
   },
   "projects": {
-    "D:\\RLF\\DATA\\DATA.csproj": {
+    "C:\\Users\\Elisia\\Desktop\\Teste\\RLF\\DATA\\DATA.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\RLF\\DATA\\DATA.csproj",
+        "projectUniqueName": "C:\\Users\\Elisia\\Desktop\\Teste\\RLF\\DATA\\DATA.csproj",
         "projectName": "DATA",
-        "projectPath": "D:\\RLF\\DATA\\DATA.csproj",
-        "packagesPath": "C:\\Users\\Ferrari\\.nuget\\packages\\",
-        "outputPath": "D:\\RLF\\DATA\\obj\\",
+        "projectPath": "C:\\Users\\Elisia\\Desktop\\Teste\\RLF\\DATA\\DATA.csproj",
+        "packagesPath": "C:\\Users\\Elisia\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Elisia\\Desktop\\Teste\\RLF\\DATA\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
-        ],
         "configFilePaths": [
-          "C:\\Users\\Ferrari\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Elisia\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -29,9 +26,10 @@
         },
         "frameworks": {
           "netcoreapp3.1": {
+            "targetAlias": "netcoreapp3.1",
             "projectReferences": {
-              "D:\\RLF\\DOMAIN\\DOMAIN.csproj": {
-                "projectPath": "D:\\RLF\\DOMAIN\\DOMAIN.csproj"
+              "C:\\Users\\Elisia\\Desktop\\Teste\\RLF\\DOMAIN\\DOMAIN.csproj": {
+                "projectPath": "C:\\Users\\Elisia\\Desktop\\Teste\\RLF\\DOMAIN\\DOMAIN.csproj"
               }
             }
           }
@@ -44,6 +42,7 @@
       },
       "frameworks": {
         "netcoreapp3.1": {
+          "targetAlias": "netcoreapp3.1",
           "dependencies": {
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",
@@ -81,24 +80,21 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.302\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.301\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "D:\\RLF\\DOMAIN\\DOMAIN.csproj": {
+    "C:\\Users\\Elisia\\Desktop\\Teste\\RLF\\DOMAIN\\DOMAIN.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\RLF\\DOMAIN\\DOMAIN.csproj",
+        "projectUniqueName": "C:\\Users\\Elisia\\Desktop\\Teste\\RLF\\DOMAIN\\DOMAIN.csproj",
         "projectName": "DOMAIN",
-        "projectPath": "D:\\RLF\\DOMAIN\\DOMAIN.csproj",
-        "packagesPath": "C:\\Users\\Ferrari\\.nuget\\packages\\",
-        "outputPath": "D:\\RLF\\DOMAIN\\obj\\",
+        "projectPath": "C:\\Users\\Elisia\\Desktop\\Teste\\RLF\\DOMAIN\\DOMAIN.csproj",
+        "packagesPath": "C:\\Users\\Elisia\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Elisia\\Desktop\\Teste\\RLF\\DOMAIN\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
-        ],
         "configFilePaths": [
-          "C:\\Users\\Ferrari\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Elisia\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -110,6 +106,7 @@
         },
         "frameworks": {
           "netcoreapp3.1": {
+            "targetAlias": "netcoreapp3.1",
             "projectReferences": {}
           }
         },
@@ -121,6 +118,7 @@
       },
       "frameworks": {
         "netcoreapp3.1": {
+          "targetAlias": "netcoreapp3.1",
           "imports": [
             "net461",
             "net462",
@@ -136,7 +134,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.302\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.301\\RuntimeIdentifierGraph.json"
         }
       }
     }
