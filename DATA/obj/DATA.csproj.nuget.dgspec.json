@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Elisia\\Desktop\\Teste\\RLF\\DATA\\DATA.csproj": {}
+    "C:\\Users\\Elisia\\GIT\\RLF\\DATA\\DATA.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Elisia\\Desktop\\Teste\\RLF\\DATA\\DATA.csproj": {
+    "C:\\Users\\Elisia\\GIT\\RLF\\DATA\\DATA.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Elisia\\Desktop\\Teste\\RLF\\DATA\\DATA.csproj",
+        "projectUniqueName": "C:\\Users\\Elisia\\GIT\\RLF\\DATA\\DATA.csproj",
         "projectName": "DATA",
-        "projectPath": "C:\\Users\\Elisia\\Desktop\\Teste\\RLF\\DATA\\DATA.csproj",
+        "projectPath": "C:\\Users\\Elisia\\GIT\\RLF\\DATA\\DATA.csproj",
         "packagesPath": "C:\\Users\\Elisia\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Elisia\\Desktop\\Teste\\RLF\\DATA\\obj\\",
+        "outputPath": "C:\\Users\\Elisia\\GIT\\RLF\\DATA\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Elisia\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -28,8 +28,8 @@
           "netcoreapp3.1": {
             "targetAlias": "netcoreapp3.1",
             "projectReferences": {
-              "C:\\Users\\Elisia\\Desktop\\Teste\\RLF\\DOMAIN\\DOMAIN.csproj": {
-                "projectPath": "C:\\Users\\Elisia\\Desktop\\Teste\\RLF\\DOMAIN\\DOMAIN.csproj"
+              "C:\\Users\\Elisia\\GIT\\RLF\\DOMAIN\\DOMAIN.csproj": {
+                "projectPath": "C:\\Users\\Elisia\\GIT\\RLF\\DOMAIN\\DOMAIN.csproj"
               }
             }
           }
@@ -84,14 +84,14 @@
         }
       }
     },
-    "C:\\Users\\Elisia\\Desktop\\Teste\\RLF\\DOMAIN\\DOMAIN.csproj": {
+    "C:\\Users\\Elisia\\GIT\\RLF\\DOMAIN\\DOMAIN.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Elisia\\Desktop\\Teste\\RLF\\DOMAIN\\DOMAIN.csproj",
+        "projectUniqueName": "C:\\Users\\Elisia\\GIT\\RLF\\DOMAIN\\DOMAIN.csproj",
         "projectName": "DOMAIN",
-        "projectPath": "C:\\Users\\Elisia\\Desktop\\Teste\\RLF\\DOMAIN\\DOMAIN.csproj",
+        "projectPath": "C:\\Users\\Elisia\\GIT\\RLF\\DOMAIN\\DOMAIN.csproj",
         "packagesPath": "C:\\Users\\Elisia\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Elisia\\Desktop\\Teste\\RLF\\DOMAIN\\obj\\",
+        "outputPath": "C:\\Users\\Elisia\\GIT\\RLF\\DOMAIN\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Elisia\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -119,6 +119,12 @@
       "frameworks": {
         "netcoreapp3.1": {
           "targetAlias": "netcoreapp3.1",
+          "dependencies": {
+            "HtmlAgilityPack": {
+              "target": "Package",
+              "version": "[1.11.37, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",
