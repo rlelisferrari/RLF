@@ -4,14 +4,16 @@ using DATA.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DATA.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220216203132_fut-mais")]
+    partial class futmais
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -126,18 +128,6 @@ namespace DATA.Migrations
                         .HasColumnType("int");
 
                     b.Property<int>("idJogo")
-                        .HasColumnType("int");
-
-                    b.Property<int>("assistencia")
-                        .HasColumnType("int");
-
-                    b.Property<int>("cartaAmarelo")
-                        .HasColumnType("int");
-
-                    b.Property<int>("cartaVermelho")
-                        .HasColumnType("int");
-
-                    b.Property<int>("gol")
                         .HasColumnType("int");
 
                     b.HasKey("idAtleta", "idJogo");

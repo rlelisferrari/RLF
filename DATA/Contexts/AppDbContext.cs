@@ -25,6 +25,19 @@ namespace DATA.Contexts
                 .HasOne(bc => bc.TipoEquipamento)
                 .WithMany(c => c.EquipamentoTipoEquipamento)
                 .HasForeignKey(bc => bc.TipoEquipamentoId);
+
+            modelBuilder.Entity<ScoutGeral>()
+                .HasKey(scout => new { scout.idAtleta, scout.idJogo });
+
+            modelBuilder.Entity<ScoutGeral>()
+                .HasOne(scout => scout.atleta)
+                .WithMany(atleta => atleta.ScoutGeral)
+                .HasForeignKey(scout => scout.idAtleta);
+
+            modelBuilder.Entity<ScoutGeral>()
+                .HasOne(scout => scout.jogo)
+                .WithMany(jogo => jogo.ScoutGeral)
+                .HasForeignKey(scout => scout.idJogo);
         }
 
         public DbSet<Ordem> Ordens { get; set; }
@@ -33,5 +46,8 @@ namespace DATA.Contexts
         public DbSet<TipoEquipamento> TipoEquipamento { get; set; }
         public DbSet<EquipamentoTipoEquipamento> EquipamentoTipoEquipamento { get; set; }
         public DbSet<VeiculoOlx> VeiculosOlx { get; set; }
+        public DbSet<Atleta> Atletas { get; set; }
+        public DbSet<Jogo> Jogos { get; set; }
+        public DbSet<ScoutGeral> ScoutsGerais { get; set; }
     }
 }
