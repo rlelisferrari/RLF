@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--
+https://go.microsoft.com/fwlink/?LinkID=208121. 
+-->
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <_PublishTargetUrl>C:\Users\rleli\Desktop\Teste\RLF\WebAppMVC\bin\Release\netcoreapp3.1\publish\</_PublishTargetUrl>
+    <History>True|2022-02-16T19:41:32.3051314Z;True|2022-02-16T16:38:42.4619257-03:00;True|2022-02-16T16:35:02.3352422-03:00;True|2022-02-16T16:32:42.2313749-03:00;True|2022-02-16T16:30:20.8615822-03:00;</History>
+  </PropertyGroup>
+</Project>

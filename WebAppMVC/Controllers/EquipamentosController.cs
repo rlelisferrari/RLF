@@ -57,6 +57,11 @@ namespace WebAppMVC.Controllers
             return View(await this.uof.EquipamentoRepository.GetAllAsyn());
         }
 
+        public async Task<IActionResult> All()
+        {            
+            return Json(await this.uof.EquipamentoRepository.GetAllAsyn());
+        }
+
         // GET: Equipamentoes/Details/5
         public async Task<IActionResult> Details(int? id)
         {

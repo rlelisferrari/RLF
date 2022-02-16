@@ -8821,19 +8821,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Elisia\\.nuget\\packages\\": {}
+    "C:\\Users\\rleli\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Elisia\\Desktop\\Teste\\RLF\\WebAppMVC\\WebAppMVC.csproj",
+      "projectUniqueName": "C:\\Users\\rleli\\Desktop\\Teste\\RLF\\WebAppMVC\\WebAppMVC.csproj",
       "projectName": "WebAppMVC",
-      "projectPath": "C:\\Users\\Elisia\\Desktop\\Teste\\RLF\\WebAppMVC\\WebAppMVC.csproj",
-      "packagesPath": "C:\\Users\\Elisia\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Elisia\\Desktop\\Teste\\RLF\\WebAppMVC\\obj\\",
+      "projectPath": "C:\\Users\\rleli\\Desktop\\Teste\\RLF\\WebAppMVC\\WebAppMVC.csproj",
+      "packagesPath": "C:\\Users\\rleli\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\rleli\\Desktop\\Teste\\RLF\\WebAppMVC\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\Elisia\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\rleli\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -8847,11 +8847,11 @@
         "netcoreapp3.1": {
           "targetAlias": "netcoreapp3.1",
           "projectReferences": {
-            "C:\\Users\\Elisia\\Desktop\\Teste\\RLF\\DATA\\DATA.csproj": {
-              "projectPath": "C:\\Users\\Elisia\\Desktop\\Teste\\RLF\\DATA\\DATA.csproj"
+            "C:\\Users\\rleli\\Desktop\\Teste\\RLF\\DATA\\DATA.csproj": {
+              "projectPath": "C:\\Users\\rleli\\Desktop\\Teste\\RLF\\DATA\\DATA.csproj"
             },
-            "C:\\Users\\Elisia\\Desktop\\Teste\\RLF\\DOMAIN\\DOMAIN.csproj": {
-              "projectPath": "C:\\Users\\Elisia\\Desktop\\Teste\\RLF\\DOMAIN\\DOMAIN.csproj"
+            "C:\\Users\\rleli\\Desktop\\Teste\\RLF\\DOMAIN\\DOMAIN.csproj": {
+              "projectPath": "C:\\Users\\rleli\\Desktop\\Teste\\RLF\\DOMAIN\\DOMAIN.csproj"
             }
           }
         }
@@ -8909,7 +8909,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.301\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.403\\RuntimeIdentifierGraph.json"
       }
     }
   }
