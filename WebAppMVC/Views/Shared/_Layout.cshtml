@@ -72,6 +72,14 @@
         .mynav_dropdown:hover .mynav_dropdown-content {
             display: block;
         }
+
+        .icon {
+            padding: 10px;
+            background: dodgerblue;
+            color: white;
+            min-width: 50px;
+            text-align: center;
+        }
     </style>
 </head>
 <body>
@@ -98,6 +106,16 @@
                         <div class="mynav_dropdown-content">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Equipamentos" asp-action="Index">Equipamentos</a>
                             <a class="nav-link text-dark" asp-area="" asp-controller="TipoEquipamentos" asp-action="Index">Tipo de Equipamentos</a>
+                        </div>
+                    </div>
+                    <div class="mynav_dropdown">
+                        <button class="mynav_dropbtn">
+                            Fut+
+                            <i class="fa fa-caret-down"></i>
+                        </button>
+                        <div class="mynav_dropdown-content">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Atletas" asp-action="Index">Atletas</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Jogos" asp-action="Index">Jogos</a>
                         </div>
                     </div>
                 </div>

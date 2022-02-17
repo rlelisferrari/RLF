@@ -9,6 +9,8 @@ namespace ApiCatalogo.Repository
         private EquipamentoRepository equipamentoRepository;
         private OrdemRepository ordemRepository;
         private TipoOrdemRepository tipoOrdemRepository;
+        private AtletaRepository atletaRepository;
+        private JogoRepository jogoRepository;
         public AppDbContext context;
 
         public UnitOfWork(AppDbContext contexto)
@@ -36,6 +38,24 @@ namespace ApiCatalogo.Repository
             {
                 return this.tipoOrdemRepository =
                     this.tipoOrdemRepository ?? new TipoOrdemRepository(this.context);
+            }
+        }
+
+        public IAtletaRepository AtletaRepository
+        {
+            get
+            {
+                return this.atletaRepository =
+                    this.atletaRepository ?? new AtletaRepository(this.context);
+            }
+        }
+
+        public IJogoRepository JogoRepository
+        {
+            get
+            {
+                return this.jogoRepository =
+                    this.jogoRepository ?? new JogoRepository(this.context);
             }
         }
 

@@ -7,6 +7,8 @@ namespace ApiCatalogo.Repository
         IEquipamentoRepository EquipamentoRepository { get; }
         IOrdemRepository OrdemRepository { get; }
         ITipoOrdemRepository TipoOrdemRepository { get; }
+        IAtletaRepository AtletaRepository { get; }
+        IJogoRepository JogoRepository { get; }
         void Commit();
     }
 }
