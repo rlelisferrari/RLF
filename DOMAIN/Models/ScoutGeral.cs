@@ -1,6 +1,6 @@
 ﻿namespace DOMAIN.Models
 {
-    public class ScoutGeral
+    public class ScoutGeral : Base.Base
     {
         public int idAtleta { get; set; }
         public int idJogo { get; set; }

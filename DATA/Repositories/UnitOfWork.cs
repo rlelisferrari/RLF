@@ -11,6 +11,7 @@ namespace ApiCatalogo.Repository
         private TipoOrdemRepository tipoOrdemRepository;
         private AtletaRepository atletaRepository;
         private JogoRepository jogoRepository;
+        private ScoutGeralRepository scoutGeralRepository;
         public AppDbContext context;
 
         public UnitOfWork(AppDbContext contexto)
@@ -56,6 +57,15 @@ namespace ApiCatalogo.Repository
             {
                 return this.jogoRepository =
                     this.jogoRepository ?? new JogoRepository(this.context);
+            }
+        }
+
+        public IScoutGeralRepository ScoutGeralRepository
+        {
+            get
+            {
+                return this.scoutGeralRepository =
+                    this.scoutGeralRepository ?? new ScoutGeralRepository(this.context);
             }
         }
 

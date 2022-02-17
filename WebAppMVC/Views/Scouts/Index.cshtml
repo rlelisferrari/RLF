@@ -1,0 +1,66 @@
+﻿@model IEnumerable<DOMAIN.Models.ScoutGeral>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                <label class="control-label">Jogo</label>
+            </th>
+            <th>
+                <label class="control-label">Atleta</label>
+            </th>
+            <th>
+                <label class="control-label">Nº de gols</label>
+            </th>
+            <th>
+                <label class="control-label">Nº de assistências</label>
+            </th>
+            <th>
+                <label class="control-label">Nº de cartões amarelos</label>
+            </th>
+            <th>
+                <label class="control-label">Nº de cartões vermelhos</label>
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.jogo.Nome)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.atleta.Nome)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.gol)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.assistencia)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.cartaAmarelo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.cartaVermelho)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

@@ -9,6 +9,7 @@ namespace ApiCatalogo.Repository
         ITipoOrdemRepository TipoOrdemRepository { get; }
         IAtletaRepository AtletaRepository { get; }
         IJogoRepository JogoRepository { get; }
+        IScoutGeralRepository ScoutGeralRepository { get; }
         void Commit();
     }
 }

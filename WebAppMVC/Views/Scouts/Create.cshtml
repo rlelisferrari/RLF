@@ -1,0 +1,92 @@
+﻿@model DOMAIN.Models.ScoutGeral
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<h1>Create</h1>
+
+<h4>ScoutGeral</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger" id="dropAtletas"></div>
+            <div class="form-group">
+                <label asp-for="idAtleta" class="control-label"></label>
+
+                @Html.DropDownList("Atletas", (IEnumerable<SelectListItem>)ViewBag.Atletas, "--- Selecione um Atleta ---", new { @class = "form-control", id = "atletasList" })
+            </div>
+            <div class="form-group" id="dropDownJogoDiv">
+                <label asp-for="idJogo" class="control-label"></label>
+                <select class="form-control" id="dropDownJogo" name="dropDownJogo"></select>
+                @*@Html.DropDownList("Jogos", (IEnumerable<SelectListItem>)ViewBag.Jogos, "--- Selecione um Jogo ---", new { @class = "form-control" })*@
+            </div>
+            <div class="form-group">
+                <label asp-for="gol" class="control-label"></label>
+                <input asp-for="gol" class="form-control" />
+                <span asp-validation-for="gol" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="assistencia" class="control-label"></label>
+                <input asp-for="assistencia" class="form-control" />
+                <span asp-validation-for="assistencia" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="cartaAmarelo" class="control-label"></label>
+                <input asp-for="cartaAmarelo" class="form-control" />
+                <span asp-validation-for="cartaAmarelo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="cartaVermelho" class="control-label"></label>
+                <input asp-for="cartaVermelho" class="form-control" />
+                <span asp-validation-for="cartaVermelho" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            $("#dropDownJogoDiv").hide();
+        });
+
+        $("#atletasList").change(function () {
+            var selected = $(this).val();
+            console.log(selected);
+            console.log("PASSOU");
+            $("#dropDownJogoDiv").show();
+
+            $.ajax({
+                type: 'POST',
+                dataType: 'JSON',
+                url: '/Scouts/GetJogosByAtletaId',
+                data: { idAtleta: selected },
+                success: function (response) {
+                    console.log(response.data);
+                    var markup = "<option value ='0'> Select --- Selecione um Jogo ---</option>"
+                    for (var i = 0; i < response.data.length; i++) {
+                        markup += "<option value ="+ response.data[i].id + ">"+ response.data[i].nome + "</option>"
+                    }
+                    $("#dropDownJogo").html(markup);
+                },
+                error: function (response) {
+                    alert("Error" + response.responseText);
+                }
+            });
+        });
+    </script>
+}
+
