@@ -36,10 +36,10 @@ namespace WebAppMVC.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(ScoutGeral scout, string atletas, int id)
+        public async Task<IActionResult> Create(ScoutGeral scout, string atletas, string dropDownJogo)
         {
             var idAtleta = Convert.ToInt32(atletas);
-            var idJogo = Convert.ToInt32(id);
+            var idJogo = Convert.ToInt32(dropDownJogo);
             if(idAtleta <= 0 || idJogo <= 0)
             {
                 ViewBag.Atletas = new SelectList(this._context.Atletas, "Id", "Nome");
@@ -62,14 +62,14 @@ namespace WebAppMVC.Controllers
         [HttpPost]
         public JsonResult GetJogosByAtletaId(int idAtleta)
         {
-            var jogos = from jogo in _context.Jogos
+            var todosJogos = _context.Jogos;
+            var ids = (from jogo in todosJogos
                         join scout in _context.ScoutsGerais on jogo.Id equals scout.idJogo
                         where scout.idAtleta == idAtleta
-                        select jogo.Id;
+                        select jogo.Id).ToList();
 
-            var ids = jogos.ToList();
 
-            return Json(new {data= _context.Jogos.Where(it => !jogos.ToList().Contains(it.Id)) });
+            return Json(new {data= todosJogos.Where(it => !ids.ToList().Contains(it.Id)) });
         }
     }
 }

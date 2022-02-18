@@ -59,15 +59,15 @@
 
 @section scripts{
     <script>
-        $(document).ready(function () {
-            $("#dropDownJogoDiv").hide();
-        });
+        //$(document).ready(function () {
+        //    $("#dropDownJogoDiv").hide();
+        //});
 
         $("#atletasList").change(function () {
             var selected = $(this).val();
             console.log(selected);
             console.log("PASSOU");
-            $("#dropDownJogoDiv").show();
+            //$("#dropDownJogoDiv").show();
 
             $.ajax({
                 type: 'POST',
@@ -76,7 +76,7 @@
                 data: { idAtleta: selected },
                 success: function (response) {
                     console.log(response.data);
-                    var markup = "<option value ='0'> Select --- Selecione um Jogo ---</option>"
+                    var markup = "<option value ='0'> --- Selecione um Jogo ---</option>"
                     for (var i = 0; i < response.data.length; i++) {
                         markup += "<option value ="+ response.data[i].id + ">"+ response.data[i].nome + "</option>"
                     }
