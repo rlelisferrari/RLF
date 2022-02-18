@@ -1,0 +1,60 @@
+﻿@model WebAppMVC.ViewModels.RelatorioScoutVM
+
+@{
+    ViewData["Title"] = "Relatório Scouts";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                <label class="control-label">Atleta</label>
+            </th>
+            <th>
+                <label class="control-label">Nº de gols</label>
+            </th>
+            <th>
+                <label class="control-label">Nº de assistências</label>
+            </th>
+            <th>
+                <label class="control-label">Nº de cartões amarelos</label>
+            </th>
+            <th>
+                <label class="control-label">Nº de cartões vermelhos</label>
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Ranking) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Atleta.Nome)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.nGols)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.nAssistencias)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.nAmarelos)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.nVermelhos)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

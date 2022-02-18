@@ -4,8 +4,10 @@ using DOMAIN.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WebAppMVC.ViewModels;
 
 namespace WebAppMVC.Controllers
 {
@@ -13,6 +15,8 @@ namespace WebAppMVC.Controllers
     {
         private readonly AppDbContext _context;
         private readonly IUnitOfWork uof;
+        private List<ScoutGeral> scouts;
+        private List<RankingScoutVM> ranking;
 
         public ScoutsController(AppDbContext context, IUnitOfWork uof)
         {
@@ -20,10 +24,10 @@ namespace WebAppMVC.Controllers
             this.uof = uof;
         }
 
+        [HttpGet]
         public async Task<IActionResult> Index()
         {
-            //var scouts = await this.uof.ScoutGeralRepository.GetAllAsyn();
-            var scouts = uof.ScoutGeralRepository.GetAllIncluding(scouts => scouts.atleta, scouts => scouts.jogo).OrderBy(s => s.jogo.Numero).ThenBy(s => s.atleta.Nome).ToList();
+            scouts = GetAllScouts();
             return View(scouts);
         }
 
@@ -32,6 +36,14 @@ namespace WebAppMVC.Controllers
             ViewBag.Atletas = new SelectList(this._context.Atletas.OrderBy(it => it.Nome).ToList(), "Id", "Nome");
             ViewBag.Jogos = new SelectList(this._context.Jogos.OrderBy(it => it.Numero).ToList(), "Id", "Nome");
             return View();
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Ranking()
+        {
+            this.ranking = GetRanking();            
+            var relatorio = new RelatorioScoutVM(this.ranking);
+            return View(relatorio);
         }
 
         [HttpPost]
@@ -70,6 +82,26 @@ namespace WebAppMVC.Controllers
 
 
             return Json(new {data= todosJogos.Where(it => !ids.ToList().Contains(it.Id)) });
+        }
+
+        private List<ScoutGeral> GetAllScouts()
+        {
+            return uof.ScoutGeralRepository.GetAllIncluding(scouts => scouts.atleta, scouts => scouts.jogo).OrderBy(s => s.jogo.Numero).ThenBy(s => s.atleta.Nome).ToList(); ;
+        }
+
+        private List<RankingScoutVM> GetRanking()
+        {
+            this.scouts = GetAllScouts();
+            return (from sc in scouts
+                           group sc by sc.atleta.Nome into g
+                           select new RankingScoutVM
+                           {
+                               Atleta = g.First().atleta,
+                               nGols = g.Sum(pc => pc.gol),
+                               nAssistencias = g.Sum(pc => pc.assistencia),
+                               nAmarelos = g.Sum(pc => pc.cartaAmarelo),
+                               nVermelhos = g.Sum(pc => pc.cartaVermelho),
+                           }).ToList();
         }
     }
 }
