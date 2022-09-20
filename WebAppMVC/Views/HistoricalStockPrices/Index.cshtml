@@ -1,0 +1,117 @@
+﻿@model IEnumerable<EOD.Model.HistoricalStockPrice>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Cotações</h1>
+
+@*<p>
+    <a asp-action="Create">Create New</a>
+</p>*@
+
+<table>
+    <thead>
+        <tr>
+            @using (Html.BeginForm())
+            {
+                <td>
+                    @Html.DropDownList("NomeAcao", (IEnumerable<SelectListItem>)ViewBag.AcaoNome, "-- Selecione uma ação--", new { @class = "form-control" })
+                </td>
+                <td>
+                    <label for="inicio">Início:</label>
+                    <input type="date" name="dataInicio" value="@ViewBag.Inicio.ToString("yyyy-MM-dd")">
+                </td>
+                <td>
+                    <label for="fim">Fim:</label>
+                    <input type="date" name="dataFim"value="@ViewBag.Fim.ToString("yyyy-MM-dd")">
+                </td>
+                <td>
+                    <input type="submit" value="Filtrar" class="btn btn-primary" name="filtrar"/>
+                </td>
+            }
+        </tr>
+    </thead>
+</table>
+
+@if(Model != null && Model.Any()){ 
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Date)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Open)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.High)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Low)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Close)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Volume)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Date)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Open)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.High)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Low)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Close)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Volume)
+                </td>
+                @*<td>
+                    <a asp-action="Edit" asp-route-id="@item.Date">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.Date">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Date">Delete</a>
+                </td>*@
+            </tr>
+        }
+    </tbody>
+</table>
+}
+
+<script>
+    //function toogleBtn() {
+    //    const acaoName = document.querySelector('NomeAcao').value;
+    //    if (acaoName) {
+    //        document.querySelector('filtrar').disabled = false;
+    //        return
+    //    }
+    //    document.querySelector('filtrar').disabled = true;
+    //}
+    //$(document).ready(function() {
+    //    $(".filtrar").click(function() {
+    //        $.ajax({
+    //            type: "POST",
+    //            url: "~/Curso/Confirmacao/" + $(this).attr("Qtd_Vagas"),
+    //            success: function() {
+    //                $(this).attr("disabled", "disabled");
+    //            }
+    //        });
+    //    });
+    //});
+</script>
+
