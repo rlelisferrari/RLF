@@ -1,7 +1,7 @@
 
 {
     "region" : "sa-east-1",
-    "configuration" : "Debug",
+    "configuration" : "Production",
     "framework"     : "netcoreapp3.1",
     "self-contained" : false,
     "application"    : "lelisolutions",
@@ -9,6 +9,6 @@
     "app-path"       : "/",
     "iis-website"    : "Default Web Site",
     "enable-xray"    : false,
-    "enhanced-health-type" : "enhanced",
+    "enhanced-health-type" : "basic",
     "additional-options"   : ""
 }

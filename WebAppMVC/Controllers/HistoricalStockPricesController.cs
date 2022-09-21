@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WebAppMVC.Auxiliar;
 using WebAppMVC.Models;
 
 namespace WebAppMVC.Controllers
@@ -24,26 +25,15 @@ namespace WebAppMVC.Controllers
         // GET: TipoEquipamento
         public async Task<IActionResult> Index(string NomeAcao, DateTime dataInicio, DateTime dataFim)
         {
-            var acoes = new List<string>() { "VALE3.SA", "PETR4.SA" };
+            var acoes = new Parametros().Ativos();
             ViewBag.NomeAcao = new SelectList(acoes,"Nome");
             ViewBag.Inicio = dataInicio < new DateTime(1800,1,1) ? DateTime.Now.AddMonths(-1): dataInicio;
             ViewBag.Fim = dataFim < new DateTime(1800,1,1) ? DateTime.Now: dataFim;
             if (!string.IsNullOrEmpty(NomeAcao))
             {
-                var cotacoes = await _b3ApiService.ApiConsumer(NomeAcao, dataInicio, dataFim, 0);
-                return View(cotacoes.OrderByDescending(it => it.Date));
+                var cotacoes = await _b3ApiService.GetIntraday(NomeAcao, dataInicio, dataFim, 1);
+                return View(cotacoes.OrderByDescending(it => it.DateTime));
             }
-
-            return View();
-        }
-
-        // GET: TipoEquipamento/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            //if (id == null)
-            //{
-            //    return NotFound();
-            //}
 
             return View();
         }

@@ -1,4 +1,4 @@
-﻿@model IEnumerable<EOD.Model.HistoricalStockPrice>
+﻿@model IEnumerable<EOD.Model.IntradayHistoricalStockPrice>
 
 @{
     ViewData["Title"] = "Index";
@@ -40,7 +40,7 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Date)
+                @Html.DisplayNameFor(model => model.DateTime)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Open)
@@ -63,31 +63,31 @@
     <tbody>
         @foreach (var item in Model)
         {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Date)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Open)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.High)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Low)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Close)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Volume)
-                </td>
-                @*<td>
-                    <a asp-action="Edit" asp-route-id="@item.Date">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.Date">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.Date">Delete</a>
-                </td>*@
-            </tr>
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateTime)
+            </td>            
+            <td>
+                @Html.DisplayFor(modelItem => item.Open)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.High)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Low)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Close)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Volume)
+            </td>
+            @*<td>
+            <a asp-action="Edit" asp-route-id="@item.Date">Edit</a> |
+            <a asp-action="Details" asp-route-id="@item.Date">Details</a> |
+            <a asp-action="Delete" asp-route-id="@item.Date">Delete</a>
+        </td>*@
+        </tr>
         }
     </tbody>
 </table>
