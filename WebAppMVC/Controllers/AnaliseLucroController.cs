@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -27,7 +28,6 @@ namespace WebAppMVC.Controllers
             _b3ApiService = new B3ApiService("6328875c73c412.21853345", _loggerApi);
         }
 
-        // GET: TipoEquipamento
         public async Task<IActionResult> Index(string NomeAcao,string Desagio, DateTime dataInicio, DateTime dataFim, DateTime horaInicio, DateTime horaFim)
         {
             InicializaFiltros(NomeAcao, Desagio, dataInicio, dataFim, horaInicio, horaFim);
@@ -47,7 +47,6 @@ namespace WebAppMVC.Controllers
             return View();
         }
 
-        // GET: TipoEquipamento
         public async Task<IActionResult> LucroResumido(string NomeAcao, string Desagio, DateTime dataInicio, DateTime dataFim, DateTime horaInicio, DateTime horaFim)
         {
             InicializaFiltros(NomeAcao, Desagio, dataInicio, dataFim, horaInicio, horaFim);
@@ -55,13 +54,15 @@ namespace WebAppMVC.Controllers
             if (!string.IsNullOrEmpty(NomeAcao))
             {
                 var cotacoes = await _b3ApiService.GetIntraday(NomeAcao, dataInicio, dataFim, 1);
-                var relatorioAtivo = _b3ApiService.AnaliseLucroPorAtivoResumo(cotacoes, NomeAcao, ConvertStringToFloat(Desagio), dataInicio, dataFim, horaInicio, horaFim);
-                if (cotacoes == null || relatorioAtivo == null || relatorioAtivo.cotacoesIntraDay == null)
+                if (cotacoes == null || cotacoes.Count == 0)
+                    this._logger.LogInformation($"API não retorna ativo: {NomeAcao}");
+                else
                 {
-                    ViewBag.Error = "Error";
-                    return View();
+                    var relatorioAtivo = _b3ApiService.AnaliseLucroPorAtivoResumo(cotacoes, NomeAcao, ConvertStringToFloat(Desagio), dataInicio, dataFim, horaInicio, horaFim);
+                    return View(relatorioAtivo);
                 }
-                return View(relatorioAtivo);
+                ViewBag.Error = "Error";
+                return View();
             }
 
             return View();
@@ -75,10 +76,8 @@ namespace WebAppMVC.Controllers
             {
                 try
                 {
-                    //A: Setup and stuff you don't want timed
                     var timer = new Stopwatch();
                     timer.Start();
-
                     
                     _consolidacaoAtivos = new Dictionary<string, RelatorioLucroAtivo>();
 
@@ -87,12 +86,6 @@ namespace WebAppMVC.Controllers
                         string ativo = item;
                         await GeraConsilidacao(ativo, dataInicio, dataFim, Desagio, horaInicio, horaFim);
                     }
-
-                    //ativo = "ABCB4.SA";
-                    //await GeraConsilidacao(ativo, dataInicio, dataFim, Desagio, horaInicio, horaFim);
-
-                    //ativo = "AGRO3.SA";
-                    //await GeraConsilidacao(ativo, dataInicio, dataFim, Desagio, horaInicio, horaFim);
 
                     timer.Stop();
                     TimeSpan timeTaken = timer.Elapsed;
