@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Threading;
@@ -74,6 +75,11 @@ namespace WebAppMVC.Controllers
             {
                 try
                 {
+                    //A: Setup and stuff you don't want timed
+                    var timer = new Stopwatch();
+                    timer.Start();
+
+                    
                     _consolidacaoAtivos = new Dictionary<string, RelatorioLucroAtivo>();
 
                     foreach (var item in new Parametros().Ativos())
@@ -81,13 +87,17 @@ namespace WebAppMVC.Controllers
                         string ativo = item;
                         await GeraConsilidacao(ativo, dataInicio, dataFim, Desagio, horaInicio, horaFim);
                     }
-                    
+
                     //ativo = "ABCB4.SA";
                     //await GeraConsilidacao(ativo, dataInicio, dataFim, Desagio, horaInicio, horaFim);
 
                     //ativo = "AGRO3.SA";
                     //await GeraConsilidacao(ativo, dataInicio, dataFim, Desagio, horaInicio, horaFim);
 
+                    timer.Stop();
+                    TimeSpan timeTaken = timer.Elapsed;
+                    this._logger.LogInformation("Time taken: " + timeTaken.ToString(@"m\:ss"));
+                    _consolidacaoAtivos.FirstOrDefault().Value.TempoProcessamento = timeTaken;
                     return View(_consolidacaoAtivos);
                 }
                 catch (Exception)

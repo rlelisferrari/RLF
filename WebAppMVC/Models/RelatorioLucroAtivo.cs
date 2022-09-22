@@ -22,6 +22,7 @@ namespace WebAppMVC.Models
         public float LucroMax;
         public float LucroMin;
         public float VolumeMedio;
+        public TimeSpan TempoProcessamento;
 
         public List<CotacaoIntraDay> cotacoesIntraDay;
 
