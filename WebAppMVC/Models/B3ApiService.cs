@@ -59,7 +59,7 @@ namespace WebAppMVC.Models
         public RelatorioLucroAtivo AnaliseLucroPorAtivoResumo(ICollection<IntradayHistoricalStockPrice> cotacoes, string ativo, float desagio, DateTime dataInicial, DateTime dataFinal, DateTime horaInicial, DateTime horaFinal)
         {
             var relatorio = new RelatorioLucroAtivo(ativo, desagio, dataInicial, dataFinal, horaInicial, horaFinal);
-            relatorio.cotacoesIntraDay = AnaliseLucroPeriodoResumo(cotacoes, horaInicial, horaFinal, desagio);
+            relatorio = AnaliseLucroPeriodoResumo(relatorio, cotacoes, horaInicial, horaFinal, desagio);
 
             return relatorio;
         }
@@ -100,11 +100,16 @@ namespace WebAppMVC.Models
             return listCotacaoIntraDay;
         }
 
-        public List<CotacaoIntraDay> AnaliseLucroPeriodoResumo(ICollection<IntradayHistoricalStockPrice> cotacoes, DateTime horaInicial, DateTime horaFinal, float desagio)
+        public RelatorioLucroAtivo AnaliseLucroPeriodoResumo(RelatorioLucroAtivo relatorio, ICollection<IntradayHistoricalStockPrice> cotacoes, DateTime horaInicial, DateTime horaFinal, float desagio)
         {
             var diaInicial = cotacoes.FirstOrDefault().DateTime;
             var diaFinal = cotacoes.LastOrDefault().DateTime;
             var listCotacaoIntraDay = new List<CotacaoIntraDay>();
+
+            relatorio.LucroMax = float.MinValue; 
+            relatorio.LucroMin = float.MaxValue; 
+            float lucroMedio = 0f;
+            float volumeMedio = 0f;
             for (var itemData = diaInicial.Value.Date; itemData.Date <= diaFinal.Value.Date; itemData = itemData.AddDays(1))
             {
                 var horaInicio = new DateTime(itemData.Year, itemData.Month, itemData.Day, horaInicial.Hour, horaInicial.Minute, 0);
@@ -127,19 +132,37 @@ namespace WebAppMVC.Models
                     if (achouLucro)
                     {
                         lucro = cotacaoReferenciaFinal.Close - target;
+                        RelatorioLucro(relatorio, (float)lucro);
                         cotacaoIntraDay.LucroPrejuizo = Math.Round((float)lucro, 2);
                         listCotacaoIntraDay.Add(cotacaoIntraDay);
                         break;
                     }                        
                 }
             }
-
-            return listCotacaoIntraDay;
+            
+            relatorio.cotacoesIntraDay = listCotacaoIntraDay;
+            return relatorio;
         }
 
         public CotacaoIntraDay IntradayHistStockPriceToCotacaoIntraDay(IntradayHistoricalStockPrice itemIn)
         {
             return new CotacaoIntraDay(itemIn.DateTime, itemIn.Open, itemIn.High, itemIn.Low, itemIn.Close, itemIn.Volume);
+        }
+
+        public void RelatorioLucro(RelatorioLucroAtivo relatorio, float lucro)
+        {
+            if (lucro > 0)
+                relatorio.EntradasLucro++;
+            else if (lucro < 0)
+                relatorio.EntradasPrejuizo++;
+
+            relatorio.Entradas = relatorio.EntradasLucro + relatorio.EntradasPrejuizo;
+            relatorio.PercentEntradasLucro = (float)Math.Round((float)relatorio.EntradasLucro / (float)relatorio.Entradas * 100,2);
+            relatorio.PercentEntradasPrejuizo = (float)Math.Round((float)relatorio.EntradasPrejuizo / (float)relatorio.Entradas * 100,2);
+            relatorio.LucroMax = (float)Math.Round(Math.Max(relatorio.LucroMax, lucro),2);
+            relatorio.LucroMin = (float)Math.Round(Math.Min(relatorio.LucroMin, lucro),2);
+            relatorio.LucroSomatorio += lucro;
+            relatorio.LucroMedio = (float)Math.Round(relatorio.LucroSomatorio / relatorio.Entradas,2);
         }
     }
 }

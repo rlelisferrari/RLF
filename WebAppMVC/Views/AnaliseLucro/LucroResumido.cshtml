@@ -1,4 +1,4 @@
-﻿@model IEnumerable<DOMAIN.Models.CotacaoIntraDay>
+﻿@model RelatorioLucroAtivo
 
 @{
     ViewData["Title"] = "Lucro Resumido";
@@ -8,8 +8,6 @@
 <div class="teste">
     <h1>Análise de Lucro/Prejuízo Resumido</h1>
 </div>
-
-
 
 <table>
     <thead>
@@ -53,43 +51,71 @@
     </thead>
 </table>
 
-@if (ViewBag.Error == "Error")
-{
-    <h2>Erro ao consumir a API</h2>
-}
-else if (Model != null && Model.Any())
-{
-    <table class="table">
-        <thead>
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.DateTime)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.LucroPrejuizo)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Volume)
-                </th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model)
-            {
+
+    @if (ViewBag.Error == "Error")
+    {
+        <h2>Erro ao consumir a API</h2>
+    }
+    else if (Model != null && Model.cotacoesIntraDay != null && Model.cotacoesIntraDay.Any())
+    {
+        <div class="box">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th class="txt-branco">
+                            Entradas: @Model.Entradas
+                        </th>
+                        <th class="txt-branco">
+                            @*Entradas c/ Lucro: @Model.EntradasLucro (@Model.PercentEntradasLucro%)*@
+                            Lucro: @Model.EntradasLucro (@Model.PercentEntradasLucro%)
+                        </th>
+                        <th class="txt-branco">
+                            Prejuízo: @Model.EntradasPrejuizo (@Model.PercentEntradasPrejuizo%)
+                            @*Entradas c/ Prejuízo: @Model.EntradasPrejuizo (@Model.PercentEntradasPrejuizo%)*@
+                        </th>
+                        <th class="txt-branco">
+                            Melhor: @Model.LucroMax
+                        </th>
+                        <th class="txt-branco">
+                            Pior: @Model.LucroMin
+                        </th>
+                        <th class="txt-branco">
+                            Lucro Médio: @Model.LucroMedio
+                        </th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+        <table class="table">
+            <thead>
                 <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.DateTime)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.LucroPrejuizo)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Volume)
-                    </td>
+                    <th>
+                        Data
+                    </th>
+                    <th>
+                        Lucro/Prejuizo)
+                    </th>
+                    <th>
+                        Volume
+                    </th>
                 </tr>
-            }
-        </tbody>
-    </table>
-}
+            </thead>
+            <tbody>
+                @foreach (var item in Model.cotacoesIntraDay)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.DateTime)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.LucroPrejuizo)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Volume)
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
 

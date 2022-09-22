@@ -53,7 +53,7 @@ namespace WebAppMVC.Controllers
                     ViewBag.Error = "Error";
                     return View();
                 }
-                return View(relatorioAtivo.cotacoesIntraDay);
+                return View(relatorioAtivo);
             }
 
             return View();
