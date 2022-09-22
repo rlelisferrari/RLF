@@ -1,6 +1,7 @@
 ﻿using DOMAIN.Models;
 using EOD;
 using EOD.Model;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,10 +13,12 @@ namespace WebAppMVC.Models
     public class B3ApiService
     {
         public API _api;
+        private readonly ILogger<B3ApiService> _logger;
 
-        public B3ApiService(string apiToken)
+        public B3ApiService(string apiToken, ILogger<B3ApiService> logger)
         {
             _api = new API(apiToken);
+            _logger = logger;
         }
 
         public virtual async Task<ICollection<HistoricalStockPrice>> GetEndOfDay(string ticker, DateTime dataInicio, DateTime dataFim, int periodo)
@@ -59,7 +62,7 @@ namespace WebAppMVC.Models
         public RelatorioLucroAtivo AnaliseLucroPorAtivoResumo(ICollection<IntradayHistoricalStockPrice> cotacoes, string ativo, float desagio, DateTime dataInicial, DateTime dataFinal, DateTime horaInicial, DateTime horaFinal)
         {
             var relatorio = new RelatorioLucroAtivo(ativo, desagio, dataInicial, dataFinal, horaInicial, horaFinal);
-            relatorio = AnaliseLucroPeriodoResumo(relatorio, cotacoes, horaInicial, horaFinal, desagio);
+            relatorio = AnaliseLucroPeriodoResumo(ativo, relatorio, cotacoes, horaInicial, horaFinal, desagio);
 
             return relatorio;
         }
@@ -100,7 +103,7 @@ namespace WebAppMVC.Models
             return listCotacaoIntraDay;
         }
 
-        public RelatorioLucroAtivo AnaliseLucroPeriodoResumo(RelatorioLucroAtivo relatorio, ICollection<IntradayHistoricalStockPrice> cotacoes, DateTime horaInicial, DateTime horaFinal, float desagio)
+        public RelatorioLucroAtivo AnaliseLucroPeriodoResumo(string ativo, RelatorioLucroAtivo relatorio, ICollection<IntradayHistoricalStockPrice> cotacoes, DateTime horaInicial, DateTime horaFinal, float desagio)
         {
             var diaInicial = cotacoes.FirstOrDefault().DateTime;
             var diaFinal = cotacoes.LastOrDefault().DateTime;
@@ -121,6 +124,12 @@ namespace WebAppMVC.Models
 
                 var cotacaoReferenciaInicial = cotacoesFiltradas.FirstOrDefault(it => it.Open != null);
                 var cotacaoReferenciaFinal = cotacoesFiltradas.LastOrDefault(it => it.Open != null);
+                if (cotacaoReferenciaInicial == null || cotacaoReferenciaFinal == null)
+                {
+                    _logger.LogInformation($"Cotação com dados nulos ativo {ativo}");
+                    break;
+                }
+
                 var target = cotacaoReferenciaInicial.Open - desagio;
 
                 double? lucro = 0.0;

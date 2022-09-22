@@ -2,6 +2,7 @@
 using EOD.Model;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,11 +16,12 @@ namespace WebAppMVC.Controllers
     {
         private readonly AppDbContext _context;
         private B3ApiService _b3ApiService;
+        private readonly ILogger<B3ApiService> _loggerApi;
 
-        public HistoricalStockPricesController(AppDbContext context)
+        public HistoricalStockPricesController(AppDbContext context, ILogger<B3ApiService> _loggerApi)
         {
             _context = context;
-            _b3ApiService = new B3ApiService("6328875c73c412.21853345");
+            _b3ApiService = new B3ApiService("6328875c73c412.21853345", _loggerApi);
         }
 
         // GET: TipoEquipamento

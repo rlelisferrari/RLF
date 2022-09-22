@@ -4,6 +4,50 @@ namespace WebAppMVC.Auxiliar
 {
     public class Parametros
     {
+        public List<string> Ativos2()
+        {
+            return new List<string>()
+            {
+                "VALE3.SA",
+                "ABCB4.SA",
+                "AGRO3.SA",
+                "RAIL3.SA",
+                "ALPA3.SA",
+                "ALPA4.SA",
+                "ALSO3.SA",
+                "AMAR3.SA",
+                "ABEV3.SA",
+                "ADHM3.SA",
+                "ARZZ3.SA",
+                "BBAS3.SA",
+                "BBDC3.SA",
+                "BBDC4.SA",
+                "BBRK3.SA",
+                "BEEF3.SA",
+                "BPHA3.SA",
+                "BPAN4.SA",
+                "BRAP3.SA",
+                "BRAP4.SA",
+                "BRFS3.SA",
+                "APER3.SA",
+                "BRKM3.SA",
+                "BRKM5.SA",
+                "BRML3.SA",
+                "BRPR3.SA",
+                "BRSR6.SA",
+                "OIBR3.SA",
+                "OIBR4.SA",
+                "BTOW3.SA",
+                "B3SA3.SA",
+                "CAMB4.SA",
+                "CARD3.SA",
+                "PETR4.SA",
+                "CCPR3.SA",
+                "CCRO3.SA",
+                "CEDO4.SA",
+            };
+        }
+
         public List<string> Ativos()
         {
             return new List<string>()
