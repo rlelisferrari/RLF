@@ -39,6 +39,26 @@ namespace WebAppMVC.Controllers
             return View();
         }
 
+        // GET: TipoEquipamento
+        public async Task<IActionResult> LucroResumido(string NomeAcao, string Desagio, DateTime dataInicio, DateTime dataFim, DateTime horaInicio, DateTime horaFim)
+        {
+            InicializaFiltros(NomeAcao, Desagio, dataInicio, dataFim, horaInicio, horaFim);
+
+            if (!string.IsNullOrEmpty(NomeAcao))
+            {
+                var cotacoes = await _b3ApiService.GetIntraday(NomeAcao, dataInicio, dataFim, 1);
+                var relatorioAtivo = _b3ApiService.AnaliseLucroPorAtivoResumo(cotacoes, NomeAcao, ConvertStringToFloat(Desagio), dataInicio, dataFim, horaInicio, horaFim);
+                if (cotacoes == null || relatorioAtivo == null || relatorioAtivo.cotacoesIntraDay == null)
+                {
+                    ViewBag.Error = "Error";
+                    return View();
+                }
+                return View(relatorioAtivo.cotacoesIntraDay);
+            }
+
+            return View();
+        }
+
         public void InicializaFiltros(string NomeAcao, string Desagio, DateTime dataInicio, DateTime dataFim, DateTime horaInicio, DateTime horaFim)
         {
             var acoes = new Parametros().Ativos();

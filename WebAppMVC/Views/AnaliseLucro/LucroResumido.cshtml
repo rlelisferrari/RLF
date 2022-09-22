@@ -1,12 +1,12 @@
 ﻿@model IEnumerable<DOMAIN.Models.CotacaoIntraDay>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Lucro Resumido";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <div class="teste">
-    <h1>Análise de Lucro/Prejuízo</h1>
+    <h1>Análise de Lucro/Prejuízo Resumido</h1>
 </div>
 
 
@@ -66,18 +66,6 @@ else if (Model != null && Model.Any())
                     @Html.DisplayNameFor(model => model.DateTime)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Open)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.High)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Low)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Close)
-                </th>
-                <th>
                     @Html.DisplayNameFor(model => model.LucroPrejuizo)
                 </th>
                 <th>
@@ -92,18 +80,6 @@ else if (Model != null && Model.Any())
                 <tr>
                     <td>
                         @Html.DisplayFor(modelItem => item.DateTime)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Open)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.High)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Low)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Close)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.LucroPrejuizo)
