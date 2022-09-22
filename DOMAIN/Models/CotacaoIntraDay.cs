@@ -18,11 +18,22 @@ namespace DOMAIN.Models
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy HH:mm}")]
         public DateTime DateTime { get; set; }
 
+        [DisplayFormat(DataFormatString = "{0:0.00}")]
         public double? Open { get; set; }
+
+        [DisplayFormat(DataFormatString = "{0:0.00}")]
         public double? High { get; set; }
+
+        [DisplayFormat(DataFormatString = "{0:0.00}")]
         public double? Low { get; set; }
+
+        [DisplayFormat(DataFormatString = "{0:0.00}")]
         public double? Close { get; set; }
+
+        [DisplayFormat(DataFormatString = "{0:0.00}")]
         public decimal? Volume { get; set; }
+
+        [DisplayFormat(DataFormatString = "{0:0.00}")]
         public double? LucroPrejuizo { get; set; }
     }
 }

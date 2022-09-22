@@ -139,11 +139,7 @@ namespace WebAppMVC.Models
 
         public CotacaoIntraDay IntradayHistStockPriceToCotacaoIntraDay(IntradayHistoricalStockPrice itemIn)
         {
-            var open = itemIn.Open != null ? Math.Round((float)itemIn.Open, 2) : 0f;
-            var high = itemIn.High != null ? Math.Round((float)itemIn.High, 2) : 0f;
-            var low = itemIn.Low != null ? Math.Round((float)itemIn.Low, 2) : 0f;
-            var close = itemIn.Close != null ? Math.Round((float)itemIn.Close, 2) : 0f;
-            return new CotacaoIntraDay(itemIn.DateTime, open, high, low, close, itemIn.Volume);
+            return new CotacaoIntraDay(itemIn.DateTime, itemIn.Open, itemIn.High, itemIn.Low, itemIn.Close, itemIn.Volume);
         }
     }
 }
