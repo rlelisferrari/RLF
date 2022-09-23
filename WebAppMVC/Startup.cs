@@ -4,6 +4,7 @@ using DATA.Contexts;
 using DATA.Repositories;
 using DOMAIN.Interfaces.Repositories;
 using DOMAIN.Services;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -11,6 +12,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using WebAppMVC.Models;
 
 namespace WebAppMVC
 {
@@ -26,6 +28,8 @@ namespace WebAppMVC
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddTransient<IAutenticacao, Autenticacao>();
+
             services.AddControllersWithViews();
 
             services.AddDbContext<AppDbContext>(
@@ -35,6 +39,13 @@ namespace WebAppMVC
             services.AddControllers();
 
             services.AddScoped(typeof(IUnitOfWork), typeof(UnitOfWork));
+
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                    .AddCookie(options =>
+                    {
+                        options.LoginPath = "/Login/LoginUsuario/";
+
+                    });
 
             //services.AddScoped(typeof(IEquipamentoRepository), typeof(EquipamentoRepository));
             //services.AddScoped(typeof(IOrdemRepository), typeof(OrdemRepository));
@@ -77,7 +88,7 @@ namespace WebAppMVC
                 {
                     endpoints.MapControllerRoute(
                         "default",
-                        "{controller=Home}/{action=Index}/{id?}");
+                        "{controller=Login/LoginUsuario}/{action=Index}/{id?}");
                 });
         }
     }

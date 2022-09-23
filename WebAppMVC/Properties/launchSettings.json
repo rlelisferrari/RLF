@@ -19,7 +19,7 @@
     "WebAppMVC": {
       "commandName": "Project",
       "launchBrowser": true,
-      "launchUrl": "Home",
+      "launchUrl": "Login/LoginUsuario",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Production"
       },
@@ -28,7 +28,7 @@
     "Development": {
       "commandName": "Project",
       "launchBrowser": true,
-      "launchUrl": "Home",
+      "launchUrl": "Login/LoginUsuario",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },

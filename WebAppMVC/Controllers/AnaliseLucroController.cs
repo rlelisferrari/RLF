@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Logging;
 using System;
@@ -14,6 +15,7 @@ using WebAppMVC.Models;
 
 namespace WebAppMVC.Controllers
 {
+    [Authorize]
     public class AnaliseLucroController : Controller
     {
         private B3ApiService _b3ApiService;
