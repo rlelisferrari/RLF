@@ -1,6 +1,7 @@
 ﻿using DOMAIN.Models;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace WebAppMVC.Models
 {
@@ -21,7 +22,8 @@ namespace WebAppMVC.Models
         public float LucroSomatorio;
         public float LucroMax;
         public float LucroMin;
-        public float VolumeMedio;
+        [DisplayFormat(DataFormatString = "{0:#,###.##}")]
+        public float VolumeTotal;
         public TimeSpan TempoProcessamento;
 
         public List<CotacaoIntraDay> cotacoesIntraDay;

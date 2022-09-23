@@ -5,6 +5,10 @@ namespace DOMAIN.Models
 {
     public class CotacaoIntraDay
     {
+        public CotacaoIntraDay()
+        {
+        }
+
         public CotacaoIntraDay(DateTime? dateTime, double? open, double? high, double? low, double? close, decimal? volume)
         {
             DateTime = (DateTime)dateTime;
@@ -30,10 +34,13 @@ namespace DOMAIN.Models
         [DisplayFormat(DataFormatString = "{0:0.00}")]
         public double? Close { get; set; }
 
-        [DisplayFormat(DataFormatString = "{0:0.00}")]
+        [DisplayFormat(DataFormatString = "{0:#,###.##}")]
         public decimal? Volume { get; set; }
 
         [DisplayFormat(DataFormatString = "{0:0.00}")]
         public double? LucroPrejuizo { get; set; }
+
+        [DisplayFormat(DataFormatString = "{0:#,###.##}")]
+        public float VolumeTotal { get; set; }
     }
 }

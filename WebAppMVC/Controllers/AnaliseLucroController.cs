@@ -58,7 +58,7 @@ namespace WebAppMVC.Controllers
                     this._logger.LogInformation($"API não retorna ativo: {NomeAcao}");
                 else
                 {
-                    var relatorioAtivo = _b3ApiService.AnaliseLucroPorAtivoResumo(cotacoes, NomeAcao, ConvertStringToFloat(Desagio), dataInicio, dataFim, horaInicio, horaFim);
+                    var relatorioAtivo = _b3ApiService.AnaliseLucroPorAtivoResumoComVolume(cotacoes, NomeAcao, ConvertStringToFloat(Desagio), dataInicio, dataFim, horaInicio, horaFim);
                     return View(relatorioAtivo);
                 }
                 ViewBag.Error = "Error";
@@ -82,6 +82,42 @@ namespace WebAppMVC.Controllers
                     _consolidacaoAtivos = new Dictionary<string, RelatorioLucroAtivo>();
 
                     foreach (var item in new Parametros().Ativos())
+                    {
+                        string ativo = item;
+                        await GeraConsilidacao(ativo, dataInicio, dataFim, Desagio, horaInicio, horaFim);
+                    }
+
+                    timer.Stop();
+                    TimeSpan timeTaken = timer.Elapsed;
+                    this._logger.LogInformation("Time taken: " + timeTaken.ToString(@"m\:ss"));
+                    _consolidacaoAtivos.FirstOrDefault().Value.TempoProcessamento = timeTaken;
+                    return View(_consolidacaoAtivos);
+                }
+                catch (Exception)
+                {
+                    ViewBag.Error = "Error";
+                    return View();
+                    throw;
+                }
+            }
+
+            return View();
+        }
+
+        public async Task<IActionResult> ConsolidacaoAtivosTeste(string Desagio, DateTime dataInicio, DateTime dataFim, DateTime horaInicio, DateTime horaFim)
+        {
+            InicializaFiltros("", Desagio, dataInicio, dataFim, horaInicio, horaFim);
+
+            if (!string.IsNullOrEmpty(Desagio))
+            {
+                try
+                {
+                    var timer = new Stopwatch();
+                    timer.Start();
+
+                    _consolidacaoAtivos = new Dictionary<string, RelatorioLucroAtivo>();
+
+                    foreach (var item in new Parametros().AtivosTeste())
                     {
                         string ativo = item;
                         await GeraConsilidacao(ativo, dataInicio, dataFim, Desagio, horaInicio, horaFim);

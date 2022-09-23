@@ -67,6 +67,14 @@ namespace WebAppMVC.Models
             return relatorio;
         }
 
+        public RelatorioLucroAtivo AnaliseLucroPorAtivoResumoComVolume(ICollection<IntradayHistoricalStockPrice> cotacoes, string ativo, float desagio, DateTime dataInicial, DateTime dataFinal, DateTime horaInicial, DateTime horaFinal)
+        {
+            var relatorio = new RelatorioLucroAtivo(ativo, desagio, dataInicial, dataFinal, horaInicial, horaFinal);
+            relatorio = AnaliseLucroPeriodoResumoComVolume(ativo, relatorio, cotacoes, horaInicial, horaFinal, desagio);
+
+            return relatorio;
+        }
+
         public List<CotacaoIntraDay> AnaliseLucroPeriodo(ICollection<IntradayHistoricalStockPrice> cotacoes, DateTime horaInicial, DateTime horaFinal, float desagio)
         {
             var diaInicial = cotacoes.FirstOrDefault().DateTime;
@@ -149,6 +157,61 @@ namespace WebAppMVC.Models
                 }
             }
             
+            relatorio.cotacoesIntraDay = listCotacaoIntraDay;
+            return relatorio;
+        }
+
+        public RelatorioLucroAtivo AnaliseLucroPeriodoResumoComVolume(string ativo, RelatorioLucroAtivo relatorio, ICollection<IntradayHistoricalStockPrice> cotacoes, DateTime horaInicial, DateTime horaFinal, float desagio)
+        {
+            var diaInicial = cotacoes.FirstOrDefault().DateTime;
+            var diaFinal = cotacoes.LastOrDefault().DateTime;
+            var listCotacaoIntraDay = new List<CotacaoIntraDay>();
+
+            relatorio.LucroMax = float.MinValue;
+            relatorio.LucroMin = float.MaxValue;
+            float lucroMedio = 0f;            
+            for (var itemData = diaInicial.Value.Date; itemData.Date <= diaFinal.Value.Date; itemData = itemData.AddDays(1))
+            {
+                var horaInicio = new DateTime(itemData.Year, itemData.Month, itemData.Day, horaInicial.Hour, horaInicial.Minute, 0);
+                var horaFim = new DateTime(itemData.Year, itemData.Month, itemData.Day, horaFinal.Hour, horaFinal.Minute, 0);
+                var cotacoesFiltradas = cotacoes.Where(it => horaInicio <= it.DateTime && it.DateTime <= horaFim).ToList();
+
+                if (cotacoesFiltradas == null || cotacoesFiltradas.Count <= 0)
+                    continue;
+
+                var cotacaoReferenciaInicial = cotacoesFiltradas.FirstOrDefault(it => it.Open != null);
+                var cotacaoReferenciaFinal = cotacoesFiltradas.LastOrDefault(it => it.Open != null);
+                if (cotacaoReferenciaInicial == null || cotacaoReferenciaFinal == null)
+                {
+                    _logger.LogInformation($"Cotação com dados nulos ativo {ativo}");
+                    break;
+                }
+
+                var target = cotacaoReferenciaInicial.Open - desagio;
+
+                double? lucro = 0.0;
+                var achouLucro = false;
+                float volumeDia = 0f;
+                var proximoDia = true;
+                var cotacaoLucro = new CotacaoIntraDay();
+                foreach (var item in cotacoesFiltradas)
+                {
+                    cotacaoLucro = IntradayHistStockPriceToCotacaoIntraDay(item);
+                    volumeDia += cotacaoLucro.Volume != null ? (float)cotacaoLucro.Volume: 0f;
+                    achouLucro = achouLucro ? achouLucro : item.Low <= target;
+                    if (achouLucro && proximoDia)
+                    {
+                        lucro = cotacaoReferenciaFinal.Close - target;
+                        RelatorioLucro(relatorio, (float)lucro);
+                        cotacaoLucro.LucroPrejuizo = Math.Round((float)lucro, 2);
+                        listCotacaoIntraDay.Add(cotacaoLucro);
+                        proximoDia = false;
+                    }
+                }
+                if(listCotacaoIntraDay.LastOrDefault() != null)
+                    listCotacaoIntraDay.LastOrDefault().VolumeTotal = volumeDia;
+            }
+
             relatorio.cotacoesIntraDay = listCotacaoIntraDay;
             return relatorio;
         }

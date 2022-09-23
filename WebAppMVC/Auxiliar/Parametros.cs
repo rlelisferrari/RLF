@@ -314,6 +314,15 @@ namespace WebAppMVC.Auxiliar
             };
         }
 
+        public List<string> AtivosTeste()
+        {
+            return new List<string>()
+            {
+                "VALE3.SA",
+                "PETR4.SA",
+            };
+        }
+
         public List<string> Desagios()
         {
             return new List<string>(){"0.1","0.2","0.3","0.4","0.5"};

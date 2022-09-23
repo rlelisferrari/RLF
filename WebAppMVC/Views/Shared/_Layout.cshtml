@@ -131,10 +131,11 @@
                             <i class="fa fa-caret-down"></i>
                         </button>
                         <div class="mynav_dropdown-content">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="HistoricalStockPrices" asp-action="Index">Cotações</a>
+                            @*<a class="nav-link text-dark" asp-area="" asp-controller="HistoricalStockPrices" asp-action="Index">Cotações</a>*@
                             <a class="nav-link text-dark" asp-area="" asp-controller="AnaliseLucro" asp-action="Index">Análise por Ativo</a>
                             <a class="nav-link text-dark" asp-area="" asp-controller="AnaliseLucro" asp-action="LucroResumido">Análise por Ativo Resumido</a>
                             <a class="nav-link text-dark" asp-area="" asp-controller="AnaliseLucro" asp-action="ConsolidacaoAtivos">Consolidação Ativos</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="AnaliseLucro" asp-action="ConsolidacaoAtivosTeste">Consolidação Ativos Teste</a>
                         </div>
                     </div>
                     @*<div class="mynav_dropdown">
@@ -182,7 +183,7 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; @DateTime.Now.Year - <a href="https://www.linkedin.com/in/rafael-lelis-ferrari-06b42547/">Rafael Lelis Ferrari</a>
+            &copy; @DateTime.Now.Year - <a href="https://finance.yahoo.com/">B3 Analytcs</a>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
