@@ -5,6 +5,8 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<div class="modal"></div>
+
 <div class="teste">
     <h1>Consolidaçao Lucro/Prejuízo</h1>
 </div>
@@ -55,53 +57,53 @@
 </table>
 
 
-    @if (ViewBag.Error == "Error")
-    {
-        <h2>Erro ao consumir a API</h2>
-    }
-    else if (Model != null && Model.Any())
-    {
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>
-                        Id
-                    </th>
-                    <th>
-                        Ativo
-                    </th>
-                    <th>
-                        Entradas
-                    </th>
-                    <th>
-                        Lucro
-                    </th>
-                    <th>
-                        % Lucro
-                    </th>
-                    <th>
-                        Prejuízo
-                    </th>
-                    <th>
-                        % Prejuízo
-                    </th>
-                    <th>
-                        Melhor
-                    </th>
-                    <th>
-                        Pior
-                    </th>
-                    <th>
-                        Lucro Médio
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-                @if (Model != null)
+@if (ViewBag.Error == "Error")
+{
+    <h2>Erro ao consumir a API</h2>
+}
+else if (Model != null && Model.Any())
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Id
+                </th>
+                <th>
+                    Ativo
+                </th>
+                <th>
+                    Entradas
+                </th>
+                <th>
+                    Lucro
+                </th>
+                <th>
+                    % Lucro
+                </th>
+                <th>
+                    Prejuízo
+                </th>
+                <th>
+                    % Prejuízo
+                </th>
+                <th>
+                    Melhor
+                </th>
+                <th>
+                    Pior
+                </th>
+                <th>
+                    Lucro Médio
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model != null)
+            {
+                var i = 1;
+                foreach (var item in Model)
                 {
-                    var i = 1;
-                    foreach (var item in Model)
-                    {
                     <tr>
                         <td>
                             @i.ToString()
@@ -134,10 +136,10 @@
                             @Html.DisplayFor(modelItem => item.Value.LucroMedio)
                         </td>
                     </tr>
-                        i++;
-                    }
+                    i++;
                 }
-            </tbody>
-        </table>
-    }
+            }
+        </tbody>
+    </table>
+}
 

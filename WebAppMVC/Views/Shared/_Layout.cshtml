@@ -6,8 +6,9 @@
     <title>@ViewData["Title"] - B3 Analytics</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
-    
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
     <style>
         body {
             font-family: Arial, Helvetica, sans-serif;
@@ -56,18 +57,18 @@
             z-index: 1;
         }
 
-        .mynav_dropdown-content a {
-            float: none;
-            color: black;
-            padding: 12px 16px;
-            text-decoration: none;
-            display: block;
-            text-align: left;
-        }
+            .mynav_dropdown-content a {
+                float: none;
+                color: black;
+                padding: 12px 16px;
+                text-decoration: none;
+                display: block;
+                text-align: left;
+            }
 
-        .mynav_dropdown-content a:hover {
-            background-color: #ddd;
-        }
+                .mynav_dropdown-content a:hover {
+                    background-color: #ddd;
+                }
 
         .mynav_dropdown:hover .mynav_dropdown-content {
             display: block;
@@ -96,6 +97,7 @@
             font-family: Arial, Geneva, Tahoma, sans-serif;
             color: black;
         }
+
         .testeDiv {
             width: 100px;
             height: 50px;
@@ -117,6 +119,39 @@
             box-shadow: 4px 4px 12px rgba(0, 0, 0, 0.15);
         }
 
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+            background: rgba( 255, 255, 255, .8 ) url('https://i.imgur.com/kv2oHwT.gif') 50% 50% no-repeat;
+            /*background: rgba( 255, 255, 255, .8 ) url('https://i.pinimg.com/originals/d5/76/eb/d576eb5196c292219de847dd8b1b25fc.gif') 50% 50% no-repeat;*/
+        }
+      /*  .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+            background: rgba( 255, 255, 255, .8 ) url('http://i.stack.imgur.com/FhHRx.gif') 50% 50% no-repeat;
+        }*/
+
+        /* When the body has the loading class, we turn
+        the scrollbar off with overflow:hidden */
+        body.loading {
+            overflow: hidden;
+        }
+
+        /* Anytime the body has the loading class, our
+        modal element will be visible */
+        body.loading .modal {
+            display: block;
+        }
     </style>
 </head>
 <body>
@@ -139,37 +174,37 @@
                         </div>
                     </div>
                     @*<div class="mynav_dropdown">
-                        <button class="mynav_dropbtn">
-                            Ordem
-                            <i class="fa fa-caret-down"></i>
-                        </button>
-                        <div class="mynav_dropdown-content">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Ordens" asp-action="Index">Ordens</a>
-                            <a class="nav-link text-dark" asp-area="" asp-controller="TipoOrdem" asp-action="Index">Tipos de Ordem</a>
+                            <button class="mynav_dropbtn">
+                                Ordem
+                                <i class="fa fa-caret-down"></i>
+                            </button>
+                            <div class="mynav_dropdown-content">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Ordens" asp-action="Index">Ordens</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="TipoOrdem" asp-action="Index">Tipos de Ordem</a>
+                            </div>
                         </div>
-                    </div>
-                    <div class="mynav_dropdown">
-                        <button class="mynav_dropbtn">
-                            Equipamento
-                            <i class="fa fa-caret-down"></i>
-                        </button>
-                        <div class="mynav_dropdown-content">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Equipamentos" asp-action="Index">Equipamentos</a>
-                            <a class="nav-link text-dark" asp-area="" asp-controller="TipoEquipamentos" asp-action="Index">Tipo de Equipamentos</a>
+                        <div class="mynav_dropdown">
+                            <button class="mynav_dropbtn">
+                                Equipamento
+                                <i class="fa fa-caret-down"></i>
+                            </button>
+                            <div class="mynav_dropdown-content">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Equipamentos" asp-action="Index">Equipamentos</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="TipoEquipamentos" asp-action="Index">Tipo de Equipamentos</a>
+                            </div>
                         </div>
-                    </div>
-                    <div class="mynav_dropdown">
-                        <button class="mynav_dropbtn">
-                            RLF FC
-                            <i class="fa fa-caret-down"></i>
-                        </button>
-                        <div class="mynav_dropdown-content">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Atletas" asp-action="Index">Atletas</a>
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Jogos" asp-action="Index">Jogos</a>
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Scouts" asp-action="Index">Scouts</a>
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Scouts" asp-action="Ranking">Ranking</a>
-                        </div>
-                    </div>*@
+                        <div class="mynav_dropdown">
+                            <button class="mynav_dropbtn">
+                                RLF FC
+                                <i class="fa fa-caret-down"></i>
+                            </button>
+                            <div class="mynav_dropdown-content">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Atletas" asp-action="Index">Atletas</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Jogos" asp-action="Index">Jogos</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Scouts" asp-action="Index">Scouts</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Scouts" asp-action="Ranking">Ranking</a>
+                            </div>
+                        </div>*@
                 </div>
 
             </div>
@@ -189,6 +224,20 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
-    @RenderSection("Scripts", required: false)    
+    @RenderSection("Scripts", required: false)
+
+    <script>
+        $body = $("body");
+
+        $(document).on({
+            ajaxStart: function () { $body.addClass("loading"); },
+        });
+
+        //Initiates an AJAX request on click
+        $(document).on("submit", function () {
+            $.get("/mockjax");
+        });
+
+    </script>
 </body>
 </html>

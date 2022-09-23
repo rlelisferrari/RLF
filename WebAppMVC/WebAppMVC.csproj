@@ -6,6 +6,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Include="wwwroot\css\__Iphone-spinner-1.gif" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="EODHistoricalData.Wrapper" Version="1.2.5" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.8">
       <PrivateAssets>all</PrivateAssets>

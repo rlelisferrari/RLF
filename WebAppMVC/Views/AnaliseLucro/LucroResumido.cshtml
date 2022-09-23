@@ -5,6 +5,8 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<div class="modal"></div>
+
 <div class="teste">
     <h1>Análise de Lucro/Prejuízo Resumido</h1>
 </div>
@@ -52,70 +54,70 @@
 </table>
 
 
-    @if (ViewBag.Error == "Error")
-    {
-        <h2>Erro ao consumir a API</h2>
-    }
-    else if (Model != null && Model.cotacoesIntraDay != null && Model.cotacoesIntraDay.Any())
-    {
-        <div class="box">
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th class="txt-branco">
-                            Entradas: @Model.Entradas
-                        </th>
-                        <th class="txt-branco">
-                            @*Entradas c/ Lucro: @Model.EntradasLucro (@Model.PercentEntradasLucro%)*@
-                            Lucro: @Model.EntradasLucro (@Model.PercentEntradasLucro%)
-                        </th>
-                        <th class="txt-branco">
-                            Prejuízo: @Model.EntradasPrejuizo (@Model.PercentEntradasPrejuizo%)
-                            @*Entradas c/ Prejuízo: @Model.EntradasPrejuizo (@Model.PercentEntradasPrejuizo%)*@
-                        </th>
-                        <th class="txt-branco">
-                            Melhor: @Model.LucroMax
-                        </th>
-                        <th class="txt-branco">
-                            Pior: @Model.LucroMin
-                        </th>
-                        <th class="txt-branco">
-                            Lucro Médio: @Model.LucroMedio
-                        </th>
-                    </tr>
-                </thead>
-            </table>
-        </div>
+@if (ViewBag.Error == "Error")
+{
+    <h2>Erro ao consumir a API</h2>
+}
+else if (Model != null && Model.cotacoesIntraDay != null && Model.cotacoesIntraDay.Any())
+{
+    <div class="box">
         <table class="table">
             <thead>
                 <tr>
-                    <th>
-                        Data
+                    <th class="txt-branco">
+                        Entradas: @Model.Entradas
                     </th>
-                    <th>
-                        Lucro/Prejuizo)
+                    <th class="txt-branco">
+                        @*Entradas c/ Lucro: @Model.EntradasLucro (@Model.PercentEntradasLucro%)*@
+                        Lucro: @Model.EntradasLucro (@Model.PercentEntradasLucro%)
                     </th>
-                    <th>
-                        Volume
+                    <th class="txt-branco">
+                        Prejuízo: @Model.EntradasPrejuizo (@Model.PercentEntradasPrejuizo%)
+                        @*Entradas c/ Prejuízo: @Model.EntradasPrejuizo (@Model.PercentEntradasPrejuizo%)*@
+                    </th>
+                    <th class="txt-branco">
+                        Melhor: @Model.LucroMax
+                    </th>
+                    <th class="txt-branco">
+                        Pior: @Model.LucroMin
+                    </th>
+                    <th class="txt-branco">
+                        Lucro Médio: @Model.LucroMedio
                     </th>
                 </tr>
             </thead>
-            <tbody>
-                @foreach (var item in Model.cotacoesIntraDay)
-                {
-                    <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.DateTime)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.LucroPrejuizo)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.VolumeTotal)
-                        </td>
-                    </tr>
-                }
-            </tbody>
         </table>
-    }
+    </div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Data
+                </th>
+                <th>
+                    Lucro/Prejuizo)
+                </th>
+                <th>
+                    Volume
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.cotacoesIntraDay)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DateTime)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.LucroPrejuizo)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.VolumeTotal)
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
 
