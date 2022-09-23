@@ -117,8 +117,8 @@ namespace WebAppMVC.Models
             var diaFinal = cotacoes.LastOrDefault().DateTime;
             var listCotacaoIntraDay = new List<CotacaoIntraDay>();
 
-            relatorio.LucroMax = float.MinValue; 
-            relatorio.LucroMin = float.MaxValue; 
+            relatorio.LucroMax = 0;
+            relatorio.LucroMin = 0;
             float lucroMedio = 0f;
             float volumeMedio = 0f;
             for (var itemData = diaInicial.Value.Date; itemData.Date <= diaFinal.Value.Date; itemData = itemData.AddDays(1))
@@ -167,8 +167,8 @@ namespace WebAppMVC.Models
             var diaFinal = cotacoes.LastOrDefault().DateTime;
             var listCotacaoIntraDay = new List<CotacaoIntraDay>();
 
-            relatorio.LucroMax = float.MinValue;
-            relatorio.LucroMin = float.MaxValue;
+            relatorio.LucroMax = 0;
+            relatorio.LucroMin = 0;
             float lucroMedio = 0f;            
             for (var itemData = diaInicial.Value.Date; itemData.Date <= diaFinal.Value.Date; itemData = itemData.AddDays(1))
             {

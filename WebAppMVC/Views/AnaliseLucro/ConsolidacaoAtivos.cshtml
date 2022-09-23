@@ -77,7 +77,13 @@
                         Lucro
                     </th>
                     <th>
+                        % Lucro
+                    </th>
+                    <th>
                         Prejuízo
+                    </th>
+                    <th>
+                        % Prejuízo
                     </th>
                     <th>
                         Melhor
@@ -96,32 +102,38 @@
                     var i = 1;
                     foreach (var item in Model)
                     {
-                    <tr>
-                        <td>
-                            @i.ToString()
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Key)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Value.Entradas)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Value.EntradasLucro)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Value.EntradasPrejuizo)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Value.LucroMax)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Value.LucroMin)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Value.LucroMedio)
-                        </td>
-                    </tr>
+                <tr>
+                    <td>
+                        @i.ToString()
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Key)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Value.Entradas)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Value.EntradasLucro)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Value.PercentEntradasLucro)%
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Value.EntradasPrejuizo)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Value.PercentEntradasPrejuizo)%
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Value.LucroMax)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Value.LucroMin)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Value.LucroMedio)
+                    </td>
+                </tr>
                         i++;
                     }
                 }
