@@ -34,13 +34,13 @@ namespace DOMAIN.Models
         [DisplayFormat(DataFormatString = "{0:0.00}")]
         public double? Close { get; set; }
 
-        [DisplayFormat(DataFormatString = "{0:#,###.##}")]
+        [DisplayFormat(DataFormatString = "{0,12:0,000.00}")]
         public decimal? Volume { get; set; }
 
         [DisplayFormat(DataFormatString = "{0:0.00}")]
         public double? LucroPrejuizo { get; set; }
 
-        [DisplayFormat(DataFormatString = "{0:#,###.##}")]
+        [DisplayFormat(DataFormatString = "{0,12:0,000.00}")]
         public float VolumeTotal { get; set; }
     }
 }
