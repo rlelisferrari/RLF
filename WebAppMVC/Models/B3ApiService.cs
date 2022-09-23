@@ -218,7 +218,7 @@ namespace WebAppMVC.Models
 
         public CotacaoIntraDay IntradayHistStockPriceToCotacaoIntraDay(IntradayHistoricalStockPrice itemIn)
         {
-            return new CotacaoIntraDay(itemIn.DateTime, itemIn.Open, itemIn.High, itemIn.Low, itemIn.Close, itemIn.Volume);
+            return new CotacaoIntraDay(itemIn.DateTime.Value.AddHours(-3), itemIn.Open, itemIn.High, itemIn.Low, itemIn.Close, itemIn.Volume);
         }
 
         public void RelatorioLucro(RelatorioLucroAtivo relatorio, float lucro)

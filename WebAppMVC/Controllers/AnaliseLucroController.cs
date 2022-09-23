@@ -35,7 +35,7 @@ namespace WebAppMVC.Controllers
             if (!string.IsNullOrEmpty(NomeAcao))
             {
                 var cotacoes = await _b3ApiService.GetIntraday(NomeAcao, dataInicio, dataFim, 1);
-                var relatorioAtivo = _b3ApiService.AnaliseLucroPorAtivo(cotacoes, NomeAcao, ConvertStringToFloat(Desagio), dataInicio,dataFim, horaInicio, horaFim);
+                var relatorioAtivo = _b3ApiService.AnaliseLucroPorAtivo(cotacoes, NomeAcao, ConvertStringToFloat(Desagio), dataInicio,dataFim, horaInicio.AddHours(3), horaFim.AddHours(3));
                 if (cotacoes == null || relatorioAtivo == null || relatorioAtivo.cotacoesIntraDay == null)
                 {
                     ViewBag.Error = "Error"; 
@@ -58,7 +58,7 @@ namespace WebAppMVC.Controllers
                     this._logger.LogInformation($"API não retorna ativo: {NomeAcao}");
                 else
                 {
-                    var relatorioAtivo = _b3ApiService.AnaliseLucroPorAtivoResumoComVolume(cotacoes, NomeAcao, ConvertStringToFloat(Desagio), dataInicio, dataFim, horaInicio, horaFim);
+                    var relatorioAtivo = _b3ApiService.AnaliseLucroPorAtivoResumoComVolume(cotacoes, NomeAcao, ConvertStringToFloat(Desagio), dataInicio, dataFim, horaInicio.AddHours(3), horaFim.AddHours(3));
                     return View(relatorioAtivo);
                 }
                 ViewBag.Error = "Error";
@@ -84,7 +84,7 @@ namespace WebAppMVC.Controllers
                     foreach (var item in new Parametros().Ativos())
                     {
                         string ativo = item;
-                        await GeraConsilidacao(ativo, dataInicio, dataFim, Desagio, horaInicio, horaFim);
+                        await GeraConsilidacao(ativo, dataInicio, dataFim, Desagio, horaInicio.AddHours(3), horaFim.AddHours(3));
                     }
 
                     timer.Stop();
@@ -120,7 +120,7 @@ namespace WebAppMVC.Controllers
                     foreach (var item in new Parametros().AtivosTeste())
                     {
                         string ativo = item;
-                        await GeraConsilidacao(ativo, dataInicio, dataFim, Desagio, horaInicio, horaFim);
+                        await GeraConsilidacao(ativo, dataInicio, dataFim, Desagio, horaInicio.AddHours(3), horaFim.AddHours(3));
                     }
 
                     timer.Stop();
@@ -149,8 +149,8 @@ namespace WebAppMVC.Controllers
             ViewBag.Desagio = new SelectList(desagios, "Desagio");
             ViewBag.Inicio = dataInicio < new DateTime(1800, 1, 1) ? DateTime.Now.AddDays(-1) : dataInicio;
             ViewBag.Fim = dataFim < new DateTime(1800, 1, 1) ? DateTime.Now : dataFim;
-            ViewBag.HoraInicio = horaInicio < new DateTime(1800, 1, 1) ? new DateTime(date.Year, date.Month,date.Day,13,0,0) : horaInicio;
-            ViewBag.HoraFim = horaFim < new DateTime(1800, 1, 1) ? new DateTime(date.Year, date.Month, date.Day, 20, 0, 0) : horaFim;
+            ViewBag.HoraInicio = horaInicio < new DateTime(1800, 1, 1) ? new DateTime(date.Year, date.Month,date.Day,10,0,0) : horaInicio;
+            ViewBag.HoraFim = horaFim < new DateTime(1800, 1, 1) ? new DateTime(date.Year, date.Month, date.Day, 17, 0, 0) : horaFim;
             ViewBag.Error = "";
         }
 
