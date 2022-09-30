@@ -16,10 +16,7 @@
         @using (Html.BeginForm())
         {
             <td>
-                @Html.DropDownList("TipoOrdem", (IEnumerable<SelectListItem>)ViewBag.TipoOrdem, "-- Selecione um tipo de ordem--", new { @class = "form-control" })
-            </td>
-            <td>
-                <input type="submit" value="Filtrar" class="btn btn-primary" />
+                @Html.DropDownList("TipoOrdem", (IEnumerable<SelectListItem>)ViewBag.TipoOrdem, "-- Selecione um tipo de ordem--", new { @class = "form-control", id="dropTipoOrdem", onClick= "filtroTipoOrdem()" })
             </td>
         }
     </tr>
@@ -27,7 +24,7 @@
 </table>
 
 
-<table class="table">
+<table class="table" id="tableOrdem">
     
     <thead>
         <tr>
