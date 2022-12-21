@@ -28,11 +28,11 @@ namespace WebAppMVC
         {
             services.AddControllersWithViews();
 
-            services.AddDbContext<AppDbContext>(
-                options =>
-                    options.UseSqlServer(Configuration.GetConnectionString("SGOOConnection")));
+            //services.AddDbContext<AppDbContext>(
+            //    options =>
+            //        options.UseSqlServer(Configuration.GetConnectionString("SGOOConnection")));
 
-            services.AddDbContext<MySqlDbContext>(
+            services.AddDbContext<AppDbContext>(
                 options =>
                     options.UseMySql(Configuration.GetConnectionString("SGOOConnection")));
 

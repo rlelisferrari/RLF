@@ -17,23 +17,21 @@ namespace WebAppMVC.Controllers
     public class OrdensController : Controller
     {
         private readonly IUnitOfWork uof;
-        private readonly AppDbContext context;
         private readonly OrdemVM ordemVM;
         private readonly ILogger<HomeController> _logger;
 
 
-        public OrdensController(ILogger<HomeController> logger, IUnitOfWork uof, AppDbContext context)
+        public OrdensController(ILogger<HomeController> logger, IUnitOfWork uof)
         {
             this._logger = logger;
             this.uof = uof;
-            this.context = context;
-            this.ordemVM = new OrdemVM(context);
+            this.ordemVM = new OrdemVM(uof);
         }
 
         // GET: Ordens
         public async Task<IActionResult> Index(string tipoOrdem)
         {
-            ViewBag.TipoOrdem = new SelectList(this.context.TipoOrdens, "Id", "Nome");
+            ViewBag.TipoOrdem = new SelectList(this.uof.TipoOrdemRepository.GetAll(), "Id", "Nome");
             var ordens = this.uof.OrdemRepository.GetAllIncluding(ordem => ordem.TipoOrdem);
 
             var id = Convert.ToInt32(tipoOrdem);
@@ -64,7 +62,7 @@ namespace WebAppMVC.Controllers
             if (ordem == null)
                 return NotFound();
 
-            ViewBag.TipoOrdem = new SelectList(this.context.TipoOrdens, "Id", "Nome", ordem.TipoOrdem.Id);
+            ViewBag.TipoOrdem = new SelectList(this.uof.TipoOrdemRepository.GetAll(), "Id", "Nome", ordem.TipoOrdem.Id);
 
             return View(ordem);
         }
@@ -72,7 +70,7 @@ namespace WebAppMVC.Controllers
         // GET: Ordens/Create
         public IActionResult Create()
         {
-            ViewBag.TipoOrdem = new SelectList(this.context.TipoOrdens, "Id", "Nome");
+            ViewBag.TipoOrdem = new SelectList(this.uof.TipoOrdemRepository.GetAll(), "Id", "Nome");
             return View();
         }
 
@@ -91,11 +89,11 @@ namespace WebAppMVC.Controllers
             var tipoOrdemId = Convert.ToInt32(tipoOrdem);
             if (tipoOrdemId <= 0)
             {
-                ViewBag.TipoOrdem = new SelectList(this.context.TipoOrdens, "Id", "Nome");
+                ViewBag.TipoOrdem = new SelectList(this.uof.TipoOrdemRepository.GetAll(), "Id", "Nome");
                 return View();
             }
 
-            ordem.TipoOrdem = this.context.TipoOrdens.FirstOrDefault(to => to.Id.Equals(tipoOrdemId));
+            ordem.TipoOrdem = this.uof.TipoOrdemRepository.GetAll().FirstOrDefault(to => to.Id.Equals(tipoOrdemId));
             if (ModelState.IsValid)
             {
                 this.uof.OrdemRepository.Add(ordem);
@@ -113,7 +111,7 @@ namespace WebAppMVC.Controllers
             if (tipoOrdemId <= 0)
                 return View(this.ordemVM);
 
-            ordem.TipoOrdem = this.context.TipoOrdens.FirstOrDefault(to => to.Id.Equals(tipoOrdemId));
+            ordem.TipoOrdem = this.uof.TipoOrdemRepository.GetAll().FirstOrDefault(to => to.Id.Equals(tipoOrdemId));
             if (ModelState.IsValid)
             {
                 this.uof.OrdemRepository.Add(ordem);
@@ -134,7 +132,7 @@ namespace WebAppMVC.Controllers
             if (ordem == null)
                 return NotFound();
 
-            ViewBag.TipoOrdem = new SelectList(this.context.TipoOrdens, "Id", "Nome", ordem.TipoOrdem.Id);
+            ViewBag.TipoOrdem = new SelectList(this.uof.TipoOrdemRepository.GetAll(), "Id", "Nome", ordem.TipoOrdem.Id);
 
             return View(ordem);
         }
@@ -150,7 +148,7 @@ namespace WebAppMVC.Controllers
                 return NotFound();
 
             var tipoOrdemId = Convert.ToInt32(Request.Form["TipoOrdem"]);
-            ordem.TipoOrdem = this.context.TipoOrdens.FirstOrDefault(to => to.Id.Equals(tipoOrdemId));
+            ordem.TipoOrdem = this.uof.TipoOrdemRepository.GetAll().FirstOrDefault(to => to.Id.Equals(tipoOrdemId));
 
             if (ModelState.IsValid)
             {
