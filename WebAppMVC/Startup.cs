@@ -32,6 +32,10 @@ namespace WebAppMVC
                 options =>
                     options.UseSqlServer(Configuration.GetConnectionString("SGOOConnection")));
 
+            services.AddDbContext<MySqlDbContext>(
+                options =>
+                    options.UseMySql(Configuration.GetConnectionString("SGOOConnection")));
+
             services.AddControllers();
 
             services.AddScoped(typeof(IUnitOfWork), typeof(UnitOfWork));
