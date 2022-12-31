@@ -26,8 +26,8 @@ namespace DOMAIN.Services
 
         public async Task<Ordem> Add(Ordem ordem)
         {
-            await this.ordemRepository.AddAsyn(ordem);
-            return ordem;
+            var newOrdem = await this.ordemRepository.AddAsyn(ordem);
+            return newOrdem;
         }
 
         public async Task<Ordem> Update(Ordem ordem, int id)
